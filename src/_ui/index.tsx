@@ -48,6 +48,7 @@ import { Dialog } from "./modal/Dialog";
 import { Modal } from "./modal/Modal";
 import { BottomSheet } from "./modal/BottomSheet";
 import { CalenderModal } from "./modal/CalenderModal";
+import Pagination from "react-js-pagination";
 
 console.error = () => {};
 
@@ -81,4 +82,5 @@ export {
   CalenderModal,
   Image,
   TouchableOpacity,
+  Pagination,
 };

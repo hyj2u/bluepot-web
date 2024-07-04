@@ -6,10 +6,11 @@ export const getAllViews = async ({
   axiosInstance,
   date = useMoment("").previousMonth,
   search = "",
-}: AxiosType & { date: any; search?: any }) => {
+  page=1,
+}: AxiosType & { date: any; search?: any; page?: any }) => {
   try {
     const result = await axiosInstance.get(
-      `/settle?settlementYmd=${date + "-01"}&search=${search}`
+      `/settle?settlementYmd=${date + "-01"}&search=${search}&page=${page}`
     );
     return result.data;
   } catch (error) {

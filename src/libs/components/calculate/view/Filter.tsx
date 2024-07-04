@@ -97,6 +97,7 @@ export default function Filter(props: {
           router.push({
             query: {
               ...router.query,
+              pate: 1,
               date: useMoment(date).format("yyyy-mm"),
             },
           });

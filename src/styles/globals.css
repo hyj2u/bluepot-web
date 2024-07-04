@@ -193,7 +193,6 @@ input::-webkit-search-results-decoration {
 .pagination {
   display: flex;
   justify-content: center;
-  margin-top: 15px;
 }
 
 ul {
