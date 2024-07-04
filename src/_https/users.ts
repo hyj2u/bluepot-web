@@ -36,12 +36,14 @@ export const createUser = async ({
   email = "",
   phone = "",
   activeYn = "Y",
+  auth="",
 }: AxiosType & {
   userId?: any;
   userPw?: any;
   userName?: any;
   email?: any;
   phone?: any;
+  auth?: any;
   activeYn?: "Y" | "N" | string;
 }) => {
   try {
@@ -52,6 +54,7 @@ export const createUser = async ({
       email,
       phone,
       activeYn,
+      auth,
     });
     return result?.data;
   } catch (error) {
@@ -69,12 +72,14 @@ export const updateUser = async ({
   email = "",
   phone = "",
   activeYn = "Y",
+  auth=""
 }: AxiosType & {
   pkey?: any;
   userPw?: any;
   userName?: any;
   email?: any;
   phone?: any;
+  auth?: any;
   activeYn?: "Y" | "N" | string;
 }) => {
   try {
@@ -85,6 +90,7 @@ export const updateUser = async ({
       email,
       phone,
       activeYn,
+      auth
     });
     return result?.data;
   } catch (error) {

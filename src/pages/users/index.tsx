@@ -110,8 +110,8 @@ export default function Index() {
 
               <V.Row align="center" gap={30} grow={8} wrap="wrap">
                 <TxtSpan size={14}>이메일 : {item.email}</TxtSpan>
-
                 <TxtSpan size={14}>연락처 : {item.phone}</TxtSpan>
+                <TxtSpan size={14}>권한 : {item.auth}</TxtSpan>
               </V.Row>
             </V.Column>
           </TouchableOpacity>

@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 
 //libs
-import { Button, Input, TouchableOpacity, Txt, TxtSpan, V } from "@/_ui";
+import { Button, Input, TouchableOpacity, Txt, TxtSpan, V, Select } from "@/_ui";
 import { regEx } from "@/libs/utils/regEx";
 import { PathIcon } from "@/libs/assets/icons";
 
@@ -27,9 +27,10 @@ export default function Index() {
     email: "",
     phone: "",
     activeYn: "Y",
+    auth: "",
   });
 
-  const { userId, userPw, userName, email, phone, activeYn } = isValues;
+  const { userId, userPw, userName, email, phone, activeYn, auth } = isValues;
 
   //
   // 사용자 상세
@@ -43,6 +44,7 @@ export default function Index() {
         userName: data?.userName,
         email: data?.email,
         phone: data?.phone,
+        auth: data?.auth,
       });
     },
     enabled: !!router?.query?.id,
@@ -60,6 +62,7 @@ export default function Index() {
         email,
         phone,
         activeYn,
+        auth,
       }),
     onSuccess: (data) => {
       console.log("회원 등록 성공", data);
@@ -71,6 +74,7 @@ export default function Index() {
         email: "",
         phone: "",
         activeYn: "Y",
+        auth: "",
       });
     },
     onError: (err: any) => {
@@ -96,6 +100,7 @@ export default function Index() {
         userName,
         email,
         phone,
+        auth,
       }),
     onSuccess: (data) => {
       console.log("수정 성공", data);
@@ -130,6 +135,7 @@ export default function Index() {
         email,
         phone,
         activeYn: "N",
+        auth,
       }),
     onSuccess: (data) => {
       console.log("사용자 삭제 성공", data);
@@ -218,6 +224,19 @@ export default function Index() {
               }
             />
           </Input>
+          <Select label="권한"
+          options={["일반사용자", "정산관리자", "전체관리자"]}
+          value={isValues.auth}
+          onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+            setIsValues({ ...isValues, auth: e.target.value } 
+            )
+          }
+          renderItem={(item: any) => (
+            <Select.Option value={item} key={item}>
+              {item}
+            </Select.Option>
+          )}
+        />
 
           <Input label="이메일">
             <Input.TextField
