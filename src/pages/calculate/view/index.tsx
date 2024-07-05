@@ -182,11 +182,11 @@ export default function Index() {
       <V.Column align="center" padding={{ top: 30 }}>
         <Pagination
           activePage={router?.query?.page ? Number(router?.query?.page) : 1}
-          itemsCountPerPage={3}
+          itemsCountPerPage={10}
           totalItemsCount={totalElements}
-          pageRangeDisplayed={3}
-          hideFirstLastPages={true}
-          hideNavigation={true}
+          pageRangeDisplayed={5}
+          //hideFirstLastPages={true}
+          //hideNavigation={true}
           onChange={(pageNumber: any) =>
             router.push({ query: { ...router?.query, page: pageNumber } })
           }
