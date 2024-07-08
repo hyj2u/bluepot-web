@@ -157,7 +157,7 @@ export default function Index() {
                   <TdContainer width={120} td={item.owner} />
                   <TdContainer
                     width={140}
-                    td={useCurrencyPrice(item?.settlementAmount)}
+                    td={useCurrencyPrice(item?.depositAmount)}
                   />
                   <TdContainer
                     width={130}
