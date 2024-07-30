@@ -24,20 +24,19 @@ export default function Index() {
   const { axiosInstance, useQuery, useMutation, queryKeys, queryClient } =
     useTanstackQuery();
 
-  const [isSearch, setIsSearch] = useState(search ?? "");
   const [tableData, setTableData] = useState([]);
 
   //
   // 정산서 데이터
   const { data, isLoading } = useQuery({
-    queryKey: [{ ...router.query }, isSearch, page],
+    queryKey: [{ ...router.query }, page],
     queryFn: () =>
       getAllViews({
         axiosInstance,
         date: date
           ? date + (type === "yyyy-mm" ? "-01" : "")
           : useMoment("").previousMonth("yyyy-mm") + "-01",
-        search: isSearch,
+        search: search,
         page: router.query.page ?? 1,
       }),
     onSuccess: (data) => setTableData(data?.data?.settlements),
@@ -77,37 +76,12 @@ export default function Index() {
     if (confirmDelete) onFinish();
   };
 
-  //
-  // 검색 핸들러
-  useEffect(() => {
-    const routeOptions = { scroll: false, shallow: true };
-
-    if (isSearch)
-      router.replace(
-        { query: { ...router.query, search: isSearch, page: 1 } },
-        undefined,
-        routeOptions
-      );
-
-    if (!!search && !isSearch)
-      router.replace(
-        { query: { ...router.query, search: undefined, page: 1 } },
-        undefined,
-        routeOptions
-      );
-  }, [isSearch]);
-
   return (
     <View loading={isLoading}>
       <Title as="정산서조회" />
 
       <Spacing size={20} />
-
-      <Filter
-        search={isSearch}
-        setSearch={setIsSearch}
-        handleFinish={handleFinish}
-      />
+      <Filter handleFinish={handleFinish} />
 
       <Spacing size={30} />
 
@@ -158,7 +132,7 @@ export default function Index() {
         </DragTable>
       )}
 
-      <V.Column align="center" padding={{ top: 30}}>
+      <V.Column align="center" padding={{ top: 30 }}>
         <Pagination
           activePage={router?.query?.page ? Number(router?.query?.page) : 1}
           itemsCountPerPage={10}

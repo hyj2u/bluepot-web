@@ -10,6 +10,7 @@ import {
 } from "@/_ui";
 import { Calendar } from "@/_ui/calender/Calender";
 import CalenderIcon from "@/libs/assets/icon-stroke/calender-icon";
+import { CancelIcon } from "@/libs/assets/icons";
 import { appUserStatusAtom } from "@/libs/atoms/auth-atom";
 import { useMoment } from "@/libs/hooks/useMoment";
 import { colors } from "@/libs/themes";
@@ -17,18 +18,15 @@ import { useRouter } from "next/router";
 import React, { ChangeEvent, useState } from "react";
 import { useRecoilValue } from "recoil";
 
-export default function Filter(props: {
-  search: any;
-  setSearch: React.Dispatch<React.SetStateAction<any>>;
-  handleFinish: any;
-}) {
+export default function Filter(props: { handleFinish: any }) {
   const appUserStatus = useRecoilValue(appUserStatusAtom);
 
   const router = useRouter();
-  const { date, type } = router.query ?? {};
+  const { date, type, search } = router.query ?? {};
+
+  const [isSearch, setIsSearch] = useState(search ? search : "");
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
 
-  const [calenderType, setCalenderType] = useState<"년월" | "년도">("년월");
   const [isDate, setIsDate] = useState<any>(date);
 
   const today = new Date();
@@ -84,16 +82,32 @@ export default function Filter(props: {
             <CalenderIcon size={16} fill="#999" />
           </TouchableOpacity>
 
-          <V.Container minWidth={220}>
-            <Input.TextField
+          <V.Row align="center" minWidth={search ? 280 : 250} gap={10}>
+            <Input.SearchField
               type="search"
               placeholder="매장을 입력하세요"
-              value={props.search}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                props.setSearch(e.target.value)
-              }
+              value={isSearch}
+              onChange={(e) => setIsSearch(e.target.value)}
+              tab={{
+                name: "검색",
+                onClick: () => router.replace({ query: { search: isSearch } }),
+              }}
             />
-          </V.Container>
+
+            {!!search && (
+              <TouchableOpacity
+                padding={{ all: 8 }}
+                backgroundColor="#f2f2f2"
+                borderRadius={10}
+                onClick={() => {
+                  setIsSearch("");
+                  router.replace({ query: { search: "" } });
+                }}
+              >
+                <CancelIcon width="18px" fill="#c0c0c0" />
+              </TouchableOpacity>
+            )}
+          </V.Row>
 
           {appUserStatus.rool !== "ROLE_USER" && (
             <>
