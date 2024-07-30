@@ -26,10 +26,7 @@ export default function UpdateFilter() {
   const [choiceCy, setChoiceCy] = useRecoilState(choiceCategoryOption);
   const [checkTable, setCheckTable] = useRecoilState(checkAddTables);
   const [inputValue, setInputValue] = useState("");
-  const [choiceCyName, setChoiceCyName] = useState("");
 
-  console.log("checkTable", checkTable);
-  console.log("choiceCy", choiceCy);
 
   //
   // 일괄입력 > 옵션

@@ -56,22 +56,7 @@ export default function SessionComponent({
     },
   });
 
-  if (isLoading)
-    return (
-      <V.Section>
-        <V.Column
-          flex={1}
-          minHeight="100vh"
-          padding={{ bottom: 100 }}
-          gap={15}
-          align="center"
-          crossAlign="center"
-        >
-       
-          <LoadingSpinner />
-        </V.Column>
-      </V.Section>
-    );
+  if (isLoading) return <></>;
 
   return <>{children}</>;
 }

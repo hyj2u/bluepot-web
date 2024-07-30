@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 
 //libs
-import { Button, LoadingSpinner, P, Spacing, T, V } from "@/_ui";
+import { Button, P, Spacing, T } from "@/_ui";
 
 //components
 import { DragTable, Title, View } from "@/libs/components/app";
@@ -29,7 +29,7 @@ export default function Index() {
   });
 
   return (
-    <View>
+    <View loading={isLoading}>
       <Title as="매장관리" />
       <Spacing size={20} />
 
@@ -37,18 +37,12 @@ export default function Index() {
 
       <Spacing size={26} />
 
-      {isLoading ? (
-        <V.Column width="100%" crossAlign="center" align="center">
-          <LoadingSpinner />
-        </V.Column>
-      ) : (
-        <DragTable>
-          <T.Table maxWidth={640}>
-            <TheadContainer />
-            <TbodyContainer data={data} />
-          </T.Table>
-        </DragTable>
-      )}
+      <DragTable>
+        <T.Table maxWidth={640}>
+          <TheadContainer />
+          <TbodyContainer data={data} />
+        </T.Table>
+      </DragTable>
 
       <P.BottomFixed height={80}>
         <Button

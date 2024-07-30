@@ -1,4 +1,4 @@
-import { LoadingSpinner, Spacing, T, Txt } from "@/_ui";
+import { Spacing, Txt } from "@/_ui";
 
 //components
 import { DragTable, Title, View } from "@/libs/components/app";
@@ -32,7 +32,7 @@ export default function Index() {
   const excelFileName = "정산자동화" + ".xlsx";
 
   return (
-    <View>
+    <View loading={isLoading}>
       <Title
         as="정산자동화"
         txt={`[대상년월 ${useMoment("").previousMonth("yyyy-mm")}]`}
@@ -47,25 +47,19 @@ export default function Index() {
 
       <Spacing size={20} />
 
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <DragTable>
-          <table
-            ref={tableRef}
-            css={{
-              borderStyle: "none",
-              borderSpacing: 0,
-              borderCollapse: "collapse",
-            }}
-          >
-            <Thead />
-            <tbody>
-              {data?.data.map((item: any) => <Tbody data={item} />)}
-            </tbody>
-          </table>
-        </DragTable>
-      )}
+      <DragTable>
+        <table
+          ref={tableRef}
+          css={{
+            borderStyle: "none",
+            borderSpacing: 0,
+            borderCollapse: "collapse",
+          }}
+        >
+          <Thead />
+          <tbody>{data?.data.map((item: any) => <Tbody data={item} />)}</tbody>
+        </table>
+      </DragTable>
     </View>
   );
 }

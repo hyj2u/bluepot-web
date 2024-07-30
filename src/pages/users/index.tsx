@@ -49,7 +49,7 @@ export default function Index() {
   });
 
   return (
-    <View>
+    <View loading={isLoading}>
       <Title as="회원관리" />
       <Spacing size={20} />
 
@@ -130,3 +130,4 @@ const NoneView = () => {
     </V.Container>
   );
 };
+Index.auth=true;

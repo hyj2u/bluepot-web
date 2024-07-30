@@ -87,7 +87,7 @@ export default function Conect({ value, name, gb, manual }: Props) {
     },
   });
 
-  console.log("allConnects", allConnects);
+
 
   return (
     <>

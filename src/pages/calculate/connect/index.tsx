@@ -1,12 +1,4 @@
-import {
-  V,
-  LoadingSpinner,
-  Spacing,
-  TouchableOpacity,
-  TxtSpan,
-  Txt,
-} from "@/_ui";
-
+import { V, Spacing, TouchableOpacity, TxtSpan, Txt } from "@/_ui";
 //assets
 import { ExcelIcon } from "@/libs/assets/icon-color";
 
@@ -52,7 +44,7 @@ export default function Index() {
   }, [data?.relations]);
 
   return (
-    <View>
+    <View loading={isLoading}>
       <Title
         as="연결관리"
         txt="(미연결매장)"
@@ -78,58 +70,53 @@ export default function Index() {
       </TouchableOpacity>
 
       <Spacing size={20} />
+      <DragTable>
+        <TheadContainer />
 
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <DragTable>
-          <TheadContainer />
+        {data?.relations?.length === 0 ? (
+          <V.Container align="center" margin={{ top: 30 }}>
+            <Txt size={16} color="#888">
+              미연결된 매장이 존재하지 않습니다
+            </Txt>
+          </V.Container>
+        ) : (
+          <V.Column>
+            {optimizedRelations?.map((item: any, i: number) => (
+              <V.Row height="100%" key={item.storeCode}>
+                <Td
+                  onClick={() =>
+                    router.push({
+                      pathname: "/store/create",
+                      query: { id: item?.pkey },
+                    })
+                  }
+                >
+                  <Txt size={13} color="#555" weight="medium">
+                    {item.storeName}
+                  </Txt>
+                </Td>
 
-          {data?.relations?.length === 0 ? (
-            <V.Container align="center" margin={{ top: 30 }}>
-              <Txt size={16} color="#888">
-                미연결된 매장이 존재하지 않습니다
-              </Txt>
-            </V.Container>
-          ) : (
-            <V.Column>
-              {optimizedRelations?.map((item: any, i: number) => (
-                <V.Row height="100%" key={item.storeCode}>
-                  <Td
-                    onClick={() =>
-                      router.push({
-                        pathname: "/store/create",
-                        query: { id: item?.pkey },
-                      })
-                    }
-                  >
-                    <Txt size={13} color="#555" weight="medium">
-                      {item.storeName}
-                    </Txt>
-                  </Td>
-
-                  {[
-                    "greenlogis",
-                    "wavepos",
-                    "moneyon",
-                    "semplus",
-                    "payco",
-                    "blueorder",
-                    "kepco",
-                    "kakao",
-                  ].map((el: any) => (
-                    <TdBox storeCode={item.storeCode} data={item[el]} gb={el} />
-                  ))}
-                </V.Row>
-              ))}
-            </V.Column>
-          )}
-        </DragTable>
-      )}
+                {[
+                  "greenlogis",
+                  "wavepos",
+                  "moneyon",
+                  "semplus",
+                  "payco",
+                  "blueorder",
+                  "kepco",
+                  "kakao",
+                ].map((el: any) => (
+                  <TdBox storeCode={item.storeCode} data={item[el]} gb={el} />
+                ))}
+              </V.Row>
+            ))}
+          </V.Column>
+        )}
+      </DragTable>
 
       <ConnectModal />
 
-      <V.Container align="center">
+      <V.Container align="center" padding={{top:20}}>
         <Pagination
           activePage={Number(page ?? 1)}
           itemsCountPerPage={10}

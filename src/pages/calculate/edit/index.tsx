@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
 //libs
-import { LoadingSpinner, Spacing } from "@/_ui";
+import { Spacing } from "@/_ui";
 
 //components
 import { DragTable, Title, View } from "@/libs/components/app";
@@ -53,7 +53,7 @@ export default function Edit() {
   });
 
   return (
-    <View>
+    <View loading={isLoading}>
       <Title
         as="정산서작성"
         txt={`[대상년월 ${useMoment("").previousMonth("yyyy-mm")}]`}
@@ -67,15 +67,11 @@ export default function Edit() {
 
       <Spacing size={20} />
 
-      {isLoading ? (
-        <LoadingSpinner />
-      ) : (
-        <DragTable>
-          <Thead />
+      <DragTable>
+        <Thead />
 
-          {tables?.map((item: any) => <Tbody data={item} />)}
-        </DragTable>
-      )}
+        {tables?.map((item: any) => <Tbody data={item} />)}
+      </DragTable>
     </View>
   );
 }

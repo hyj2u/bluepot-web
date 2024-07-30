@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import {
   Button,
   Input,
-  LoadingSpinner,
   Spacing,
   TouchableOpacity,
   Txt,
@@ -27,6 +26,7 @@ import {
 import { useRecoilState } from "recoil";
 import { getUserDetail, updateUser } from "@/_https/users";
 import { useJenga } from "@/_ui/JengaProvider";
+import LoadingInfoBox from "@/libs/components/custom/LoadingInfoBox";
 
 //
 export default function Index() {
@@ -104,12 +104,7 @@ export default function Index() {
     onUpdate();
   };
 
-  if (isLoading)
-    return (
-      <V.Section>
-        <LoadingSpinner />
-      </V.Section>
-    );
+  if (isLoading) return <LoadingInfoBox />;
 
   return (
     <V.Section>

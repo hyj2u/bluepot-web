@@ -2,14 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 
 //libs
-import {
-  LoadingSpinner,
-  Pagination,
-  Spacing,
-  TouchableOpacity,
-  Txt,
-  V,
-} from "@/_ui";
+import { Pagination, Spacing, TouchableOpacity, Txt, V } from "@/_ui";
 
 //components
 import { DragTable, Title, View } from "@/libs/components/app";
@@ -27,7 +20,7 @@ import NoneDataResult from "@/libs/components/custom/NoneDataResult";
 export default function Index() {
   const router = useRouter();
   const { addToast } = useJenga();
-  const { search, page } = router.query ?? {};
+  const { search, page, type, date } = router.query ?? {};
   const { axiosInstance, useQuery, useMutation, queryKeys, queryClient } =
     useTanstackQuery();
 
@@ -37,16 +30,13 @@ export default function Index() {
   //
   // 정산서 데이터
   const { data, isLoading } = useQuery({
-    queryKey: [
-      queryKeys.calculate.view.table,
-      router.query.date,
-      isSearch,
-      page,
-    ],
+    queryKey: [{ ...router.query }, isSearch, page],
     queryFn: () =>
       getAllViews({
         axiosInstance,
-        date: router.query.date ?? useMoment("").previousMonth("yyyy-mm"),
+        date: date
+          ? date + (type === "yyyy-mm" ? "-01" : "")
+          : useMoment("").previousMonth("yyyy-mm") + "-01",
         search: isSearch,
         page: router.query.page ?? 1,
       }),
@@ -108,7 +98,7 @@ export default function Index() {
   }, [isSearch]);
 
   return (
-    <View>
+    <View loading={isLoading}>
       <Title as="정산서조회" />
 
       <Spacing size={20} />
@@ -127,59 +117,48 @@ export default function Index() {
         <DragTable>
           <TheadContainer />
 
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            <>
-              {tableData?.map((item: any) => (
-                <TouchableOpacity
-                  key={item?.pkey}
-                  onClick={() =>
-                    router.push({
-                      pathname: `/calculate/view/${item?.pkey}`,
-                      query: {
-                        settlementYmd:
-                          router.query.date ??
-                          useMoment("").previousMonth("yyyy-mm"),
-                      },
-                    })
-                  }
-                >
-                  <TdContainer
-                    width={150}
-                    td={
-                      router.query.date ??
-                      useMoment("").previousMonth("yyyy-mm")
-                    }
-                  />
-                  <TdContainer width={240} td={item.settlementTitle ?? "-"} />
-                  <TdContainer width={250} td={item.storeName} />
-                  <TdContainer width={120} td={item.owner} />
-                  <TdContainer
-                    width={140}
-                    td={useCurrencyPrice(item?.depositAmount)}
-                  />
-                  <TdContainer
-                    width={130}
-                    td={useMoment(item.settlementYmd).format("yyyy-mm-dd")}
-                  />
-                  <TdContainer
-                    width={140}
-                    tdColor={colors.keyColor}
-                    td={
-                      item?.closedYn === "Y"
-                        ? "정산완료 (수정불가)"
-                        : "미정산 (수정가능)"
-                    }
-                  />
-                </TouchableOpacity>
-              ))}
-            </>
-          )}
+          {tableData?.map((item: any) => (
+            <TouchableOpacity
+              key={item?.pkey}
+              onClick={() =>
+                router.push({
+                  pathname: `/calculate/view/${item?.pkey}`,
+                  query: {
+                    settlementYmd: useMoment("").previousMonth("yyyy-mm"),
+                  },
+                })
+              }
+            >
+              <TdContainer
+                width={150}
+                td={router.query.date ?? useMoment("").previousMonth("yyyy-mm")}
+              />
+              <TdContainer width={240} td={item.settlementTitle ?? "-"} />
+              <TdContainer width={250} td={item.storeName} />
+              <TdContainer width={120} td={item.owner} />
+              <TdContainer
+                width={140}
+                td={useCurrencyPrice(item?.settlementAmount)}
+              />
+              <TdContainer
+                width={130}
+                td={useMoment(item.settlementYmd).format("yyyy-mm-dd")}
+              />
+              <TdContainer
+                width={140}
+                tdColor={colors.keyColor}
+                td={
+                  item?.closedYn === "Y"
+                    ? "정산완료 (수정불가)"
+                    : "미정산 (수정가능)"
+                }
+              />
+            </TouchableOpacity>
+          ))}
         </DragTable>
       )}
 
-      <V.Column align="center" padding={{ top: 30 }}>
+      <V.Column align="center" padding={{ top: 30}}>
         <Pagination
           activePage={router?.query?.page ? Number(router?.query?.page) : 1}
           itemsCountPerPage={10}

@@ -4,6 +4,7 @@ export function useMoment(dateParam: string | Date) {
   return {
     format: (
       typeParam:
+        | "yyyy"
         | "yyyy.mm"
         | "yyyy.mm.dd"
         | "yyyy-mm"
@@ -19,6 +20,9 @@ export function useMoment(dateParam: string | Date) {
 
       const formattedMonth = month >= 10 ? month : `0${month}`;
       const formattedDay = day >= 10 ? day : `0${day}`;
+      if(type==="yyyy"){
+        return'${year}';
+      }
 
       if (type === "yyyy.mm") {
         return `${year}.${formattedMonth}`;

@@ -8,7 +8,6 @@ import { View } from "@/libs/components/app";
 //hooks
 import { getPublicReceipt } from "@/_https/public";
 import { useTanstackQuery } from "@/libs/hooks/useTanstackQuery";
-import { useMoment } from "@/libs/hooks";
 import { BottomFixed } from "@/_ui/flex/position/BottomFixed";
 import ReactToPrint from "react-to-print";
 import { Coast, Order, Title } from "@/libs/components/publicReceipt";
@@ -20,7 +19,7 @@ export default function Index() {
 
   const { useQuery } = useTanstackQuery();
 
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () =>
       getPublicReceipt({
         storeCode: router.query.storeCode ?? "",
@@ -36,6 +35,7 @@ export default function Index() {
       size={1080}
       enabled={!!(router.query.storeCode && router.query.settlementYmd)}
       description="해당 URL을 다시 한번 확인해주세요"
+      loading={isLoading}
     >
       {settlementTotal?.closedYn === "Y" && (
         <>

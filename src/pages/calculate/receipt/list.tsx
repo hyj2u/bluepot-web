@@ -15,7 +15,7 @@ import {
 import FlatList from "react-flatlist-ui";
 
 //hooks
-import ReactToPrint from "react-to-print";
+
 import { useCurrencyPrice } from "@/libs/hooks";
 import { useTanstackQuery } from "@/libs/hooks/useTanstackQuery";
 import {
@@ -58,7 +58,7 @@ export default function Index() {
   });
 
   return (
-    <View>
+    <View loading={isLoading}>
       <V.Container
         ref={printRef}
         maxWidth={700}

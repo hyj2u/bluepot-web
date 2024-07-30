@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useRouter } from "next/router";
 
 //libs
-import { LoadingSpinner, Spacing, T, V } from "@/_ui";
+import { Spacing } from "@/_ui";
 
 //components
 import { DragTable, Title, View } from "@/libs/components/app";
@@ -39,7 +39,7 @@ export default function Index() {
     ".xlsx";
 
   return (
-    <View>
+    <View loading={isLoading}>
       <Title as="입금/세금계산서/총괄표" />
 
       <Spacing size={20} />
@@ -47,27 +47,20 @@ export default function Index() {
       <Filter onDownloadExcel={() => exportToExcel(tableRef, excelFileName)} />
 
       <Spacing size={30} />
-
-      {isLoading ? (
-        <V.Column width="100%" crossAlign="center" align="center">
-          <LoadingSpinner />
-        </V.Column>
-      ) : (
-        <DragTable>
-          <table
-            ref={tableRef}
-            css={{
-              maxWidth: 640,
-              borderStyle: "none",
-              borderSpacing: 0,
-              borderCollapse: "collapse",
-            }}
-          >
-            <TheadContainer />
-            <TbodyContainer data={data} />
-          </table>
-        </DragTable>
-      )}
+      <DragTable>
+        <table
+          ref={tableRef}
+          css={{
+            maxWidth: 640,
+            borderStyle: "none",
+            borderSpacing: 0,
+            borderCollapse: "collapse",
+          }}
+        >
+          <TheadContainer />
+          <TbodyContainer data={data} />
+        </table>
+      </DragTable>
     </View>
   );
 }

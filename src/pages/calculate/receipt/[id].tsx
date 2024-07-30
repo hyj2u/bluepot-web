@@ -25,7 +25,7 @@ export default function Index() {
     enabled: !!settlementYmd,
   });
 
-  console.log(data);
+
 
   return (
     <View>

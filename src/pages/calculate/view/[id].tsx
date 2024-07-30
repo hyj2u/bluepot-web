@@ -65,8 +65,6 @@ export default function Index() {
 
   const { closedYn, pkey } = detailData?.settlementTotal ?? {};
 
-  console.log(closedYn);
-
   const { settlementTotal, extraSupplies } = data?.data ?? {};
 
   //
@@ -169,7 +167,7 @@ export default function Index() {
               </Txt>
 
               <V.Row width="auto" gap={20}>
-             
+        
 
                 <TouchableOpacity
                   padding={{ all: 4 }}
