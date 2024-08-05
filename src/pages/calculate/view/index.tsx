@@ -81,6 +81,7 @@ export default function Index() {
       <Title as="정산서조회" />
 
       <Spacing size={20} />
+
       <Filter handleFinish={handleFinish} />
 
       <Spacing size={30} />
@@ -98,7 +99,9 @@ export default function Index() {
                 router.push({
                   pathname: `/calculate/view/${item?.pkey}`,
                   query: {
-                    settlementYmd: useMoment("").previousMonth("yyyy-mm"),
+                    settlementYmd:
+                      router.query.date ??
+                      useMoment("").previousMonth("yyyy-mm"),
                   },
                 })
               }

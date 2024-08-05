@@ -41,29 +41,31 @@ export default function Filter(props: { handleFinish: any }) {
             <년월버튼
               name="년도"
               checked={type === "yyyy"}
-              onClick={() =>
+              onClick={() => {
+                setIsSearch("");
                 router.push({
                   query: {
                     date: today.getFullYear(),
                     type: "yyyy",
                     page: 1,
                   },
-                })
-              }
+                });
+              }}
             />
 
             <년월버튼
               name="년월"
               checked={type ? type === "yyyy-mm" : true}
-              onClick={() =>
+              onClick={() => {
+                setIsSearch("");
                 router.push({
                   query: {
                     date: useMoment("").previousMonth("yyyy-mm"),
                     type: "yyyy-mm",
                     page: 1,
                   },
-                })
-              }
+                });
+              }}
             />
           </V.Row>
 
@@ -90,7 +92,8 @@ export default function Filter(props: { handleFinish: any }) {
               onChange={(e) => setIsSearch(e.target.value)}
               tab={{
                 name: "검색",
-                onClick: () => router.replace({ query: { search: isSearch } }),
+                onClick: () =>
+                  router.replace({ query: { search: isSearch, date, type } }),
               }}
             />
 
@@ -101,7 +104,7 @@ export default function Filter(props: { handleFinish: any }) {
                 borderRadius={10}
                 onClick={() => {
                   setIsSearch("");
-                  router.replace({ query: { search: "" } });
+                  router.replace({ query: { type, date, search: "" } });
                 }}
               >
                 <CancelIcon width="18px" fill="#c0c0c0" />
@@ -188,27 +191,6 @@ export default function Filter(props: { handleFinish: any }) {
 
 //
 //
-const 년월선택버튼 = ({
-  name,
-  checked,
-  onClick,
-}: {
-  name: string;
-  checked?: boolean;
-  onClick: any;
-}) => (
-  <TouchableOpacity
-    width="100%"
-    padding={{ all: 12 }}
-    backgroundColor={checked ? colors.keyColor : "#F0F0F0"}
-    txtColor={checked ? "#fff" : "#aaa"}
-    borderRadius={12}
-    crossAlign="center"
-    onClick={onClick}
-  >
-    {name}
-  </TouchableOpacity>
-);
 
 const 년월버튼 = ({
   name,
