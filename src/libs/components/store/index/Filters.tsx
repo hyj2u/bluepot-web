@@ -1,4 +1,5 @@
 import { Checkbox, Input, TouchableOpacity, V } from "@/_ui";
+import { CancelIcon } from "@/libs/assets/icons";
 import { colors } from "@/libs/themes";
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
@@ -7,7 +8,7 @@ export default function Filters() {
   const router = useRouter();
   const { brandCd, activeYn, search } = router?.query ?? {};
   const routeOptions = { scroll: false, shallow: true };
-  const [isSearch, setIsSearch] = useState(router.query.search ?? "");
+  const [isSearch, setIsSearch] = useState(search ?? "");
 
   const category = (val: "1" | "2" | "3" | undefined | string) => {
     router.replace(
@@ -17,21 +18,6 @@ export default function Filters() {
     );
   };
 
-  useEffect(() => {
-    if (isSearch)
-      router.replace(
-        { query: { ...router.query, search: isSearch } },
-        undefined,
-        routeOptions
-      );
-
-    if (!!search && !isSearch)
-      router.replace(
-        { query: { ...router.query, search: undefined } },
-        undefined,
-        routeOptions
-      );
-  }, [isSearch]);
 
   useEffect(() => {
     if (!activeYn) {
@@ -99,16 +85,35 @@ export default function Filters() {
           />
         </V.Container>
 
-        <Input maxWidth={300}>
-          <Input.TextField
+        <V.Row width="auto">
+          <Input.SearchField
             type="search"
-            placeholder="담당자 / 상호 / 점주를 검색하세요"
+            placeholder="담당자 / 상호 / 점주를 검색"
             value={isSearch}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setIsSearch(e.target.value)
-            }
+            onChange={(e) => setIsSearch(e.target.value)}
+            tab={{
+              name: "검색",
+              onClick: () => {
+                router.replace(
+                  { query: { ...router.query, search: isSearch } },
+                  undefined,
+                  routeOptions
+                );
+              },
+            }}
+            cancelTab={{
+              view: !!search,
+              onClick: () => {
+                setIsSearch("");
+                router.replace(
+                  { query: { ...router.query, search: "" } },
+                  undefined,
+                  routeOptions
+                );
+              },
+            }}
           />
-        </Input>
+        </V.Row>
       </V.Row>
     </V.Column>
   );

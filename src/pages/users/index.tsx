@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 //libs
@@ -27,20 +27,7 @@ export default function Index() {
   const [search, setSearch] = useState("");
   const { axiosInstance, queryKeys, useQuery } = useTanstackQuery();
 
-  useEffect(() => {
-    if (!!search)
-      router.replace({ query: { search } }, undefined, {
-        scroll: false,
-        shallow: true,
-      });
-    else {
-      router.replace({ query: null }, undefined, {
-        scroll: false,
-        shallow: true,
-      });
-    }
-  }, [search]);
-
+  const queryRoute = { scroll: false, shallow: true };
   //
   // 데이터
   const { data, isLoading } = useQuery({
@@ -54,12 +41,22 @@ export default function Index() {
       <Spacing size={20} />
 
       <V.Row maxWidth={440} gap={10}>
-        <Input.TextField
+        <Input.SearchField
           placeholder="이름/이메일/연락처 검색"
           value={search}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setSearch(e.target.value)
-          }
+          onChange={(e) => setSearch(e.target.value)}
+          tab={{
+            name: "검색",
+            onClick: () =>
+              router.replace({ query: { search } }, undefined, queryRoute),
+          }}
+          cancelTab={{
+            view: !!router.query.search,
+            onClick: () => {
+              router.replace({ query: { search: "" } }, undefined, queryRoute);
+              setSearch("");
+            },
+          }}
         />
 
         <TouchableOpacity
@@ -130,4 +127,4 @@ const NoneView = () => {
     </V.Container>
   );
 };
-Index.auth=true;
+Index.auth = true;

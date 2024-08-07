@@ -1,13 +1,4 @@
-import {
-  CalenderModal,
-  Input,
-  V,
-  TouchableOpacity,
-  TxtSpan,
-  Modal,
-  Txt,
-  Spacing,
-} from "@/_ui";
+import { CalenderModal, Input, V, TouchableOpacity, TxtSpan, Txt } from "@/_ui";
 import { Calendar } from "@/_ui/calender/Calender";
 import CalenderIcon from "@/libs/assets/icon-stroke/calender-icon";
 import { CancelIcon } from "@/libs/assets/icons";
@@ -15,7 +6,7 @@ import { appUserStatusAtom } from "@/libs/atoms/auth-atom";
 import { useMoment } from "@/libs/hooks/useMoment";
 import { colors } from "@/libs/themes";
 import { useRouter } from "next/router";
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 
 export default function Filter(props: { handleFinish: any }) {
@@ -84,7 +75,7 @@ export default function Filter(props: { handleFinish: any }) {
             <CalenderIcon size={16} fill="#999" />
           </TouchableOpacity>
 
-          <V.Row align="center" minWidth={search ? 280 : 250} gap={10}>
+          <V.Row align="center" minWidth={250}>
             <Input.SearchField
               type="search"
               placeholder="매장을 입력하세요"
@@ -93,23 +84,18 @@ export default function Filter(props: { handleFinish: any }) {
               tab={{
                 name: "검색",
                 onClick: () =>
-                  router.replace({ query: { search: isSearch, date, type } }),
+                  router.replace({
+                    query: { ...router.query, search: isSearch },
+                  }),
+              }}
+              cancelTab={{
+                view: !!search,
+                onClick: () => { 
+                  setIsSearch("");
+                  router.replace({ query: { ...router.query, search: "" } });
+                },
               }}
             />
-
-            {!!search && (
-              <TouchableOpacity
-                padding={{ all: 8 }}
-                backgroundColor="#f2f2f2"
-                borderRadius={10}
-                onClick={() => {
-                  setIsSearch("");
-                  router.replace({ query: { type, date, search: "" } });
-                }}
-              >
-                <CancelIcon width="18px" fill="#c0c0c0" />
-              </TouchableOpacity>
-            )}
           </V.Row>
 
           {appUserStatus.rool !== "ROLE_USER" && (
