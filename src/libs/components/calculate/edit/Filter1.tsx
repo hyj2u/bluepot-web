@@ -1,26 +1,19 @@
-import {
-  ChangeEvent,
-  KeyboardEvent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 import { useRouter } from "next/router";
 
 //libs
 import {
   Checkbox,
+  Input,
   LoadingSpinner,
   Modal,
   Spacing,
   TouchableOpacity,
   Txt,
   TxtSpan,
-  TxtTab,
   V,
 } from "@/_ui";
 import { colors } from "@/libs/themes";
-import { GlobalInputTheme } from "@/_ui/_themes/input";
 import FlatList from "react-flatlist-ui";
 
 //assets
@@ -33,59 +26,39 @@ import { getColumnFilters } from "@/_https/calculate/edit";
 //atoms
 import { useRecoilState } from "recoil";
 import { columnFiltersAtom } from "@/libs/atoms/calculate/edit";
-// import { handleAddColumn } from ".";
 
 //
 export default function Filter1() {
   const router = useRouter();
-  const inputT = GlobalInputTheme() as any;
+  const { search } = router.query ?? {};
   const [isOpen, setIsOpen] = useState(false);
-  const [isSearch, setIsSearch] = useState("");
-
-  useEffect(() => {
-    if (!isSearch)
-      router.replace("/calculate/edit", undefined, {
-        shallow: false,
-        scroll: false,
-      });
-    else return;
-  }, [isSearch]);
-
-  const searchRoute = () =>
-    router.replace({ query: { search: isSearch } }, undefined, {
-      scroll: false,
-      shallow: true,
-    });
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") searchRoute();
-  };
+  const [isSearch, setIsSearch] = useState(search ? search : "");
 
   return (
     <>
       <V.ScrollDragHorizontal gap={8}>
-        <V.Container
-          direction="horizontal"
-          maxWidth={240}
-          padding={{ vertical: 13, left: 12, right: 8 }}
-          border={{ solid: 1, position: "all", color: "#e2e2e2" }}
-          borderRadius={12}
-        >
-          <input
-            placeholder="매장명을 입력하세요"
+        <V.Row align="center" width="auto">
+          <Input.SearchField
+            type="search"
+            placeholder="매장을 입력하세요"
             value={isSearch}
             onChange={(e) => setIsSearch(e.target.value)}
-            onKeyDown={handleKeyDown}
-            css={{
-              ...inputT,
-              width: "100%",
-              fontSize: 14,
-              "::placeholder": { color: colors.chiffon500 },
+            tab={{
+              name: "검색",
+              onClick: () =>
+                router.replace({
+                  query: { ...router.query, search: isSearch },
+                }),
+            }}
+            cancelTab={{
+              view: !!search,
+              onClick: () => {
+                setIsSearch("");
+                router.replace({ query: { ...router.query, search: "" } });
+              },
             }}
           />
-
-          <TxtTab onClick={() => searchRoute()}>검색</TxtTab>
-        </V.Container>
+        </V.Row>
 
         <TouchableOpacity
           backgroundColor={colors.keyColor}
