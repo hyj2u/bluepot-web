@@ -55,19 +55,20 @@ interface Props extends Omit<InputHTMLAttributes<HTMLInputElement>, "size"> {
     focus?: ThemeProps | undefined;
   };
 }
+
 const SearchField = forwardRef(
   (props: Props, ref: ForwardedRef<HTMLInputElement>) => {
     const { disabled, tab, error, edge, sizes, themes, ...rest } = props;
     const id = props?.id ?? useUid();
-    const [isFocused, setIsFocused] = useState(false);
 
+    const [isFocused, setIsFocused] = useState(false);
     const handleFocus = useCallback(() => setIsFocused(true), [isFocused]);
     const handleBlur = useCallback(() => setIsFocused(false), [isFocused]);
+
     const systems = { themes, focus: isFocused, error, disabled, sizes };
 
     //
     // numberic
-    
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (props.type === "number") {
         let { value } = event.target;

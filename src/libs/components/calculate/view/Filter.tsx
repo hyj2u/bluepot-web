@@ -1,7 +1,5 @@
 import { CalenderModal, Input, V, TouchableOpacity, TxtSpan, Txt } from "@/_ui";
-import { Calendar } from "@/_ui/calender/Calender";
 import CalenderIcon from "@/libs/assets/icon-stroke/calender-icon";
-import { CancelIcon } from "@/libs/assets/icons";
 import { appUserStatusAtom } from "@/libs/atoms/auth-atom";
 import { useMoment } from "@/libs/hooks/useMoment";
 import { colors } from "@/libs/themes";
@@ -21,7 +19,7 @@ export default function Filter(props: { handleFinish: any }) {
   const [isDate, setIsDate] = useState<any>(date);
 
   const today = new Date();
-  const minDate = new Date(2023, 11, 1);
+  const minDate = new Date(2022, 12, 1);
   const maxDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
 
   return (
@@ -90,7 +88,7 @@ export default function Filter(props: { handleFinish: any }) {
               }}
               cancelTab={{
                 view: !!search,
-                onClick: () => { 
+                onClick: () => {
                   setIsSearch("");
                   router.replace({ query: { ...router.query, search: "" } });
                 },

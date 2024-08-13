@@ -31,6 +31,7 @@ import { columnFiltersAtom } from "@/libs/atoms/calculate/edit";
 export default function Filter1() {
   const router = useRouter();
   const { search } = router.query ?? {};
+
   const [isOpen, setIsOpen] = useState(false);
   const [isSearch, setIsSearch] = useState(search ? search : "");
 
