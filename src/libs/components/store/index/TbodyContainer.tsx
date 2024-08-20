@@ -12,6 +12,17 @@ export default function TbodyContainer({ data }: { data: any }) {
   const router = useRouter();
   const { activeYn } = router?.query ?? {};
 
+  const formatPhoneNumber = (phoneNumber: string) => {
+    if (!phoneNumber) return "-";
+    const cleaned = phoneNumber.replace(/\D/g, "");
+    if (cleaned.length === 10) {
+      return cleaned.replace(/(\d{3})(\d{3})(\d{4})/, "$1-$2-$3");
+    } else if (cleaned.length === 11) {
+      return cleaned.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3");
+    }
+    return phoneNumber; // 포맷이 맞지 않으면 원래 값을 반환
+  };
+
   return (
     <tbody css={themes.thead}>
       {data?.map((item: any) => (
@@ -53,7 +64,7 @@ export default function TbodyContainer({ data }: { data: any }) {
               </td>
 
               <td css={{ ...themes.th, minWidth: 150 }}>
-                {(item?.phone ?? "-") || (item?.phone === "" && "-")}
+              {formatPhoneNumber(item?.phone)}
               </td>
 
               <td css={{ ...themes.th, minWidth: 240, padding: "12px" }}>
