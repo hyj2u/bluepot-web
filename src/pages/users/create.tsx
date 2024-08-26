@@ -27,7 +27,7 @@ export default function Index() {
     email: "",
     phone: "",
     activeYn: "Y",
-    auth: "",
+    auth: "일반사용자",
   });
 
   const { userId, userPw, userName, email, phone, activeYn, auth } = isValues;
@@ -179,7 +179,7 @@ export default function Index() {
           <Input label="아이디">
             <Input.TextField
               id="id"
-              maxLength={10}
+              maxLength={30}
               placeholder="아이디를 입력하세요"
               disabled={!!router.query.id}
               value={isValues.userId}
@@ -216,7 +216,7 @@ export default function Index() {
           <Input label="이름">
             <Input.TextField
               id="name"
-              maxLength={6}
+              maxLength={30}
               placeholder="이름을 입력하세요"
               value={isValues.userName}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
