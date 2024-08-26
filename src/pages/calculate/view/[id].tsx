@@ -165,19 +165,6 @@ export default function Index() {
               <Txt as="h1" size={24}>
                 {settlementTotal?.settlementTitle ?? "-"}
               </Txt>
-
-              <V.Row width="auto" gap={20}>
-        
-
-                <TouchableOpacity
-                  padding={{ all: 4 }}
-                  onClick={() => onUpdateClosedYn()}
-                >
-                  <TxtSpan weight="medium" size={14} color={colors.blue}>
-                    {closedYn === "N" ? "정산 완료하기 >" : "미정산 처리하기 >"}
-                  </TxtSpan>
-                </TouchableOpacity>
-              </V.Row>
             </V.Column>
 
             <Description data={settlementTotal} />

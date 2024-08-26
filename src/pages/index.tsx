@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
 
 //libs
@@ -27,6 +27,12 @@ export default function Index() {
     queryKey: [queryKeys.store.all, brandCd, activeYn, search],
     queryFn: () => getAllStores({ axiosInstance, brandCd, activeYn, search }),
   });
+
+  // Redirect to /calculate/view on page load
+  useEffect(() => {
+    router.replace("/calculate/view");
+  }, [router]);
+
 
   return (
     <View loading={isLoading}>

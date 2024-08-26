@@ -190,6 +190,7 @@ export default function Index() {
           <Input label="연락처">
             <Input.PhoneNumberField
               placeholder="연락처를 입력하세요"
+              disabled
               value={isValues.phone}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 setIsValues({ ...isValues, phone: e.target.value })

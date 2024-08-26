@@ -25,3 +25,19 @@ export const getUserVerify = async ({ axiosInstance }: AxiosType) => {
     throw error;
   }
 };
+//비밀번호 변경
+export const updatePassword = async ({ 
+  axiosInstance,
+  newPassword = "",
+}: AxiosType & {
+  newPassword?: any;
+}) => {
+  try {
+    const result = await axiosInstance.patch(`/auth/pw`, {
+      newPassword,
+    });
+    return result?.data;
+  } catch (error) {
+    throw error;
+  }
+};

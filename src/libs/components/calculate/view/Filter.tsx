@@ -96,33 +96,6 @@ export default function Filter(props: { handleFinish: any }) {
             />
           </V.Row>
 
-          {appUserStatus.rool !== "ROLE_USER" && (
-            <>
-              <TouchableOpacity
-                minHeight={50}
-                backgroundColor={colors.keyColor}
-                txtColor="#fff"
-                padding={{ vertical: 10, horizontal: 14 }}
-                txtSize={15}
-                borderRadius={14}
-                onClick={() => router.push("/calculate/view/create")}
-              >
-                정산서 등록
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                minHeight={50}
-                backgroundColor={colors.blueBg}
-                txtColor={colors.keyColor}
-                padding={{ vertical: 10, horizontal: 14 }}
-                txtSize={15}
-                borderRadius={14}
-                onClick={() => props.handleFinish()}
-              >
-                정산완료
-              </TouchableOpacity>
-            </>
-          )}
         </V.Row>
       </V.ScrollDragHorizontal>
 
