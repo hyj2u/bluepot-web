@@ -81,7 +81,7 @@ export default function Readers({ onDownloadExcel }: { onDownloadExcel: any }) {
             gap={10}
             css={{ [MQ[3]]: { justifyContent: "start" } }}
           >
-            {appUserStatus.rool !== "ROLE_USER" && (
+            {appUserStatus.rule !== "ROLE_USER" && (
               <>
                 <TouchableOpacity
                   borderRadius={10}

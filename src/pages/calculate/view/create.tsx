@@ -25,9 +25,9 @@ export default function Create() {
   const appUserStatus = useRecoilValue(appUserStatusAtom);
 
   useEffect(() => {
-    if (appUserStatus.rool === "ROLE_USER") router.back();
+    if (appUserStatus.rule === "ROLE_USER") router.back();
     else return;
-  }, [appUserStatus.rool]);
+  }, [appUserStatus.rule]);
 
   const router = useRouter();
   const { addToast } = useJenga();

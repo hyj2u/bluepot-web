@@ -52,7 +52,7 @@ export default function AddTr({ t, aVal, bVal, note, valKey }: Props) {
         direction="horizontal"
         css={TdTheme}
       >
-        {appUserStatus.rool !== "ROLE_USER" && (
+        {appUserStatus.rule !== "ROLE_USER" && (
           <TouchableOpacity
             height="100%"
             backgroundColor="#f8f8f8"

@@ -35,7 +35,7 @@ export default function SessionComponent({
     onSuccess: (data: any) => {
       setAppStatus({
         ...appStatus,
-        rool: data?.auth,
+        rule: data?.auth,
         status: STATUS.SUCCESS,
         accessToken,
         refreshToken,
@@ -48,7 +48,7 @@ export default function SessionComponent({
       useCookie.remove(TOKEN.REFRESH);
       queryClient.clear;
       setAppStatus({
-        rool: null,
+        rule: null,
         status: STATUS.FAILED,
         accessToken: null,
         refreshToken: null,

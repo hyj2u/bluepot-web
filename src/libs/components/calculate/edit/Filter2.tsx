@@ -78,7 +78,7 @@ export default function Filter2() {
 
   return (
     <>
-      {appUserStatus.rool === "ROLE_USER" ? (
+      {appUserStatus.rule === "ROLE_USER" ? (
         <정산서다운로드버튼 />
       ) : (
         <V.Container

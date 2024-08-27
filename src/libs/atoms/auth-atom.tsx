@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
 type Props = {
-  rool: "ROLE_ADMIN" | "ROLE_MANAGER" | "ROLE_USER" | null;
+  rule: "ROLE_ADMIN" | "ROLE_MANAGER" | "ROLE_USER" |"ROLE_FRANCHISE"| null;
   status: "success" | "failed" | "loading";
   accessToken?: any;
   refreshToken?: any;
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export let initialAppUserStatus: Props = {
-  rool: null,
+  rule: null,
   status: "failed",
   accessToken: null,
   refreshToken: null,

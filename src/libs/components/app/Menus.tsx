@@ -15,6 +15,10 @@ export default function Menus() {
   const appStatus = useRecoilValue(appUserStatusAtom);
 
   const { pathname } = router;
+  // Hide menu for ROLE_FRANCHISE
+  if (appStatus.rule === "ROLE_FRANCHISE") {
+    return null;
+  }
 
   const activeTheme = ({ path }: { path: any }) => {
     const defaultTheme = { padding: 10, fontSize: 15 };
@@ -28,10 +32,7 @@ export default function Menus() {
 
   return (
     <V.Container padding={{ all: 10 }}>
-      <V.Container
-        align="center"
-        padding={{ bottom: 40 }}
-      >
+      <V.Container align="center" padding={{ bottom: 40 }}>
         <Txt size={20} weight="bold" color="#6b9dc9">
           통합정산시스템
         </Txt>
@@ -79,7 +80,7 @@ export default function Menus() {
           ))}
         </MenuBox>
 
-        {appStatus.rool === "ROLE_ADMIN" && (
+        {appStatus.rule === "ROLE_ADMIN" && (
           <Link
             href="/users"
             css={{

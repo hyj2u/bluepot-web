@@ -96,7 +96,7 @@ export default function Filter(props: { handleFinish: any }) {
             />
           </V.Row>
 
-          {appUserStatus.rool !== "ROLE_USER" && (
+          {appUserStatus.rule !== "ROLE_USER" && (
             <>
               <TouchableOpacity
                 minHeight={50}

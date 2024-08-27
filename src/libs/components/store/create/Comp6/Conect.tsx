@@ -104,7 +104,7 @@ export default function Conect({ value, name, gb, manual }: Props) {
               </TxtSpan>
             ))}
 
-            {appUserStatus.rool !== "ROLE_USER" && (
+            {appUserStatus.rule !== "ROLE_USER" && (
               <TouchableOpacity
                 txtSize={13}
                 txtColor={colors.red}
@@ -119,7 +119,7 @@ export default function Conect({ value, name, gb, manual }: Props) {
 
         {value?.length === 0 && (
           <>
-            {appUserStatus.rool === "ROLE_USER" ? (
+            {appUserStatus.rule === "ROLE_USER" ? (
               <TxtSpan size={14}>-</TxtSpan>
             ) : (
               <TouchableOpacity onClick={() => setOpenConect(true)}>

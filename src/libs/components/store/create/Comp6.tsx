@@ -178,7 +178,7 @@ export default function Comp6() {
 
       <Divider size={10} color="#f5f5f5" spacing={{ vertical: 24 }} />
 
-      {appUserStatus.rool !== "ROLE_USER" && (
+      {appUserStatus.rule !== "ROLE_USER" && (
         <>
           <Input label="백업단말기">
             <Input.TextField
@@ -238,7 +238,7 @@ export default function Comp6() {
         </V.Row>
       )}
 
-      {appUserStatus.rool !== "ROLE_USER" && (
+      {appUserStatus.rule !== "ROLE_USER" && (
         <Button
           width="100%"
           onClick={() => updateBackupNumber()}

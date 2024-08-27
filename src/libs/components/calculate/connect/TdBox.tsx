@@ -61,7 +61,7 @@ export default function TdBox({ data, storeCode, gb }: Props) {
 
       {data?.length == 0 && (
         <>
-          {appUserStatus.rool === "ROLE_USER" ? (
+          {appUserStatus.rule === "ROLE_USER" ? (
             <V.Column height="100%">
               <TxtSpan color="#aaa">- 연결없음</TxtSpan>
             </V.Column>

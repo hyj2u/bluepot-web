@@ -84,7 +84,7 @@ export default function TdField({
       onChange={handleOnChange}
       disabled={
         detailData.settlementTotal.closedYn === "Y" ||
-        appUserStatus.rool === "ROLE_USER"
+        appUserStatus.rule === "ROLE_USER"
       }
       placeholder="-"
       maxLength={type === "note" ? 40 : 12}
