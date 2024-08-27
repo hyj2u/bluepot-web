@@ -4,7 +4,7 @@ import { appUserStatusAtom } from "@/libs/atoms/auth-atom";
 import { useMoment } from "@/libs/hooks/useMoment";
 import { colors } from "@/libs/themes";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 
 export default function Filter(props: { handleFinish: any }) {
@@ -21,7 +21,18 @@ export default function Filter(props: { handleFinish: any }) {
   const today = new Date();
   const minDate = new Date(2022, 12, 1);
   const maxDate = new Date(today.getFullYear(), today.getMonth() - 1, 1);
-
+   // Default to yearly view
+   useEffect(() => {
+    if (!type || !date) {
+      router.push({
+        query: {
+          date: today.getFullYear().toString(),
+          type: "yyyy",
+          page: 1,
+        },
+      });
+    }
+  }, []);
   return (
     <>
       <V.ScrollDragHorizontal>
@@ -29,7 +40,7 @@ export default function Filter(props: { handleFinish: any }) {
           <V.Row gap={20} padding={{ right: 10 }}>
             <년월버튼
               name="년도"
-              checked={type === "yyyy"}
+              checked={type ? type === "yyyy" : true}
               onClick={() => {
                 setIsSearch("");
                 router.push({
@@ -44,7 +55,7 @@ export default function Filter(props: { handleFinish: any }) {
 
             <년월버튼
               name="년월"
-              checked={type ? type === "yyyy-mm" : true}
+              checked={type === "yyyy-mm" }
               onClick={() => {
                 setIsSearch("");
                 router.push({
@@ -85,6 +96,7 @@ export default function Filter(props: { handleFinish: any }) {
                   router.replace({
                     query: { ...router.query, search: isSearch },
                   }),
+
               }}
               cancelTab={{
                 view: !!search,

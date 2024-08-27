@@ -2,7 +2,7 @@
 // -------- Colors --------
 // ------------------------
 export const colors = {
-  keyColor: "#6b9dc9",
+  keyColor: "#BF5349",
 
   none: "transparent",
   white: "#ffffff",

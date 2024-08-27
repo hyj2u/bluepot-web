@@ -216,7 +216,7 @@ ul.pagination li {
 
 ul.pagination li:hover {
   background-color: #f8f8f8;
-  color: #1f7bda;
+  color: #F2B29B;
   cursor: pointer;
 }
 
@@ -239,11 +239,12 @@ ul.pagination li.active a {
 }
 
 ul.pagination li.active {
-  background-color: #1f7bda;
+  background-color: #F2B29B;
 }
 
 .page-selection {
   width: 48px;
   height: 30px;
-  color: #1f7bda;
+  color: #F2B29B;
 }
+

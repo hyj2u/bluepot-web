@@ -32,8 +32,8 @@ export default function Menus() {
         align="center"
         padding={{ bottom: 40 }}
       >
-        <Txt size={20} weight="bold" color="#6b9dc9">
-          통합정산시스템
+        <Txt size={20} weight="bold" color="#BF5349">
+          점주용정산시스템
         </Txt>
       </V.Container>
 

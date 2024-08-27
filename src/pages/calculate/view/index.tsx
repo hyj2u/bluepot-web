@@ -33,9 +33,7 @@ export default function Index() {
     queryFn: () =>
       getAllViews({
         axiosInstance,
-        date: date
-          ? date + (type === "yyyy-mm" ? "-01" : "")
-          : useMoment("").previousMonth("yyyy-mm") + "-01",
+        date:  date ? date : new Date().getFullYear().toString(), // Default to the current year
         search: search,
         page: router.query.page ?? 1,
       }),

@@ -25,7 +25,7 @@ export default function Header() {
 
   return (
     <>
-      <AppBar serviceName="통합정산시스템">
+      <AppBar serviceName="점주용정산시스템">
         <V.Row
           align="center"
           height="100%"

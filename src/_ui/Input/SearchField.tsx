@@ -125,7 +125,7 @@ const SearchField = forwardRef(
           {!!tab && !edge && (
             <TxtTab
               id={`${id}-button`}
-              color={tab.color ?? "#4788f4"}
+              color={tab.color ?? "#D95436"}
               size={tab.size ?? 14}
               onMouseEnter={!tab.disabled ? (handleFocus as any) : null}
               onMouseLeave={!tab.disabled ? (handleBlur as any) : null}

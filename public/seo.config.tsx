@@ -8,13 +8,13 @@ interface SEOProps extends NextSeoProps {
 
 function SEO({ title, description, image }: SEOProps) {
   const site_url = "";
-  const site_name = "통합정산시스템";
+  const site_name = "점주용 정산시스템";
   const seo_title = title
-    ? `${title ?? "통합정산시스템"} | 관리자 오신 것을 환영합니다`
-    : "통합정산시스템 관리자 오신 것을 환영합니다";
+    ? `${title ?? "점주용 정산시스템"} |  오신 것을 환영합니다`
+    : "점주용정산시스템 오신 것을 환영합니다";
   const seo_description = description
     ? description
-    : "블루포트 관리자 오신 것을 환영합니다";
+    : "점주용 정산시스템 오신 것을 환영합니다";
   const seo_images = image ? image : "";
 
   return (

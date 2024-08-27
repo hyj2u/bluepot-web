@@ -3,6 +3,7 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Button, V, Input, Spacing, Txt } from "@/_ui";
 import { Image } from "react-image-cached-resizer";
+import { MQ } from "@/libs/themes";
 import { useRecoilState } from "recoil";
 import { appUserStatusAtom } from "@/libs/atoms/auth-atom";
 import { useTanstackQuery } from "@/libs/hooks/useTanstackQuery";
@@ -58,11 +59,11 @@ const Login: React.FC = () => {
   return (
     <V.Section>
       <V.Container direction="horizontal">
-        <V.Container
+      <V.Container
           flex={1}
           height="100%"
           minHeight="100vh"
-          css={{ display: "none" }} // Example CSS for responsiveness
+          css={{ [MQ[1]]: { display: "none" } }}
         >
           <Image
             source="/assets/images/login/login.png"
@@ -82,7 +83,7 @@ const Login: React.FC = () => {
         >
           <V.Column maxWidth={500} align="start">
             <Txt as="h1" size={24}>
-              통합정산시스템에 오신 것을 환영합니다
+              점주용정산시스템 오신 것을 환영합니다
             </Txt>
 
             <V.Form margin={{ top: 30 }} onSubmit={handleOnSubmit}>
