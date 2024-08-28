@@ -286,8 +286,7 @@ export default function Index() {
               type="submit"
               width="100%"
               disabled={
-                !regEx.email.test(email) ||
-                (userId && userName && email && phone) === ""
+                (userId && userName  && phone) === ""
               }
             >
               {!!router.query.id ? "회원수정" : "회원등록"}
