@@ -29,6 +29,17 @@ export default function Menus() {
       color: pathname === path ? colors.keyColor : "#666",
     };
   };
+  const settlementMenuItems = [
+    { name: "연결관리", a: "/calculate/connect" },
+    { name: "정산자동화", a: "/calculate/auto" },
+    { name: "정산서 작성", a: "/calculate/edit" },
+    { name: "정산서 조회", a: "/calculate/view" },
+    { name: "입금/세금계산서/총괄표", a: "/calculate/receipt" },
+  ];
+  const filteredSettlementMenuItems =
+    appStatus.rule === "ROLE_ACCOUNTANT"
+      ? settlementMenuItems.filter((item) => item.name === "정산서 조회")
+      : settlementMenuItems;
 
   return (
     <V.Container padding={{ all: 10 }}>
@@ -39,36 +50,32 @@ export default function Menus() {
       </V.Container>
 
       <V.Column gap={10}>
-        <Link
-          href="/"
-          css={{
-            padding: "14px 14px 14px 24px",
-            fontSize: 15,
-            backgroundColor: "#f8f8f8",
-            borderRadius: 14,
-            width: "100%",
-          }}
-        >
-          <V.Row align="center" gap={16}>
-            <MenusIcon as={"매장관리"} />
-            <Txt
-              size={16}
-              weight="bold"
-              color={pathname === "/" ? colors.keyColor : "#797979"}
-            >
-              매장관리
-            </Txt>
-          </V.Row>
-        </Link>
+        {appStatus.rule !== "ROLE_ACCOUNTANT" && (
+          <Link
+            href="/"
+            css={{
+              padding: "14px 14px 14px 24px",
+              fontSize: 15,
+              backgroundColor: "#f8f8f8",
+              borderRadius: 14,
+              width: "100%",
+            }}
+          >
+            <V.Row align="center" gap={16}>
+              <MenusIcon as={"매장관리"} />
+              <Txt
+                size={16}
+                weight="bold"
+                color={pathname === "/" ? colors.keyColor : "#797979"}
+              >
+                매장관리
+              </Txt>
+            </V.Row>
+          </Link>
+        )}
 
         <MenuBox title="정산관리">
-          {[
-            { name: "연결관리", a: "/calculate/connect" },
-            { name: "정산자동화", a: "/calculate/auto" },
-            { name: "정산서 작성", a: "/calculate/edit" },
-            { name: "정산서 조회", a: "/calculate/view" },
-            { name: "입금/세금계산서/총괄표", a: "/calculate/receipt" },
-          ].map((item) => (
+          {filteredSettlementMenuItems.map((item) => (
             <Link
               key={item.name}
               href={item.a}

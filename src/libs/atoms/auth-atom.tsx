@@ -1,7 +1,7 @@
 import { atom } from "recoil";
 
 type Props = {
-  rule: "ROLE_ADMIN" | "ROLE_MANAGER" | "ROLE_USER" |"ROLE_FRANCHISE"| null;
+  rule: "ROLE_ADMIN" | "ROLE_MANAGER" | "ROLE_USER" |"ROLE_FRANCHISE"| "ROLE_ACCOUNTANT" | null;
   status: "success" | "failed" | "loading";
   accessToken?: any;
   refreshToken?: any;

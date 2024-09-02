@@ -26,7 +26,7 @@ export default function Coast() {
   const addFields = useRecoilValue(addTableFieldsAtom);
 
   const 추가버튼유무 =
-    settlementTotal.closedYn === "Y" || appUserStatus.rule !== "ROLE_USER";
+    settlementTotal.closedYn === "Y" || appUserStatus.rule === "ROLE_USER"||appUserStatus.rule==="ROLE_ACCOUNTANT";
 
   return (
     <V.ScrollDragHorizontal>

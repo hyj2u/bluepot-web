@@ -225,7 +225,7 @@ export default function Index() {
             />
           </Input>
           <Select label="권한"
-          options={["일반사용자", "정산관리자", "전체관리자","점주"]}
+          options={["일반사용자", "정산관리자", "전체관리자","점주", "세무사"]}
           value={isValues.auth}
           onChange={(e: ChangeEvent<HTMLSelectElement>) =>
             setIsValues({ ...isValues, auth: e.target.value } 

@@ -6,7 +6,7 @@ import { useRecoilValue } from "recoil";
 import { useRouter } from "next/router";
 
 export default function useAppVerifiy(
-  rule?: "ROLE_ADMIN" | "ROLE_MANAGER" | "ROLE_USER"
+  rule?: "ROLE_ADMIN" | "ROLE_MANAGER" | "ROLE_USER" |"ROLE_FRANCHISE" | "ROLE_ACCOUNTANT"
 ) {
   const appUserStatus = useRecoilValue(appUserStatusAtom);
   const router = useRouter();

@@ -30,10 +30,12 @@ export default function Index() {
   const appStatus = useRecoilValue(appUserStatusAtom);
 
   // Check user role
-  if (appStatus.rule === "ROLE_FRANCHISE") {
+  if (appStatus.rule === "ROLE_FRANCHISE" || appStatus.rule==="ROLE_ACCOUNTANT") {
+    router.push("/calculate/view");
     return (
       <NoneDataResult title="권한이 없습니다" />
     );
+   
   }
 
 

@@ -80,7 +80,7 @@ export default function Index() {
       updateUser({
         axiosInstance,
         pkey: appStatus.pkey,
-        userPw: !!userPw ? userPw : null,
+        userPw: !!userPw ? userPw : "",
         userName,
         email,
         phone,
