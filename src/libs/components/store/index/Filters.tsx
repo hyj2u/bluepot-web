@@ -48,6 +48,7 @@ export default function Filters() {
             { name: "로로컴퍼니", val: "2" },
             { name: "푸드코드", val: "3" },
             { name: "버거", val: "4" },
+            { name: "기타", val: "9" },
           ].map((item, i) => (
             <TouchableOpacity
               key={item.name}
