@@ -24,8 +24,7 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
   const [error, setError] = useState("");
   const [lengthError, setLengthError] = useState("");
   const { addToast } = useJenga(); // useJenga에서 addToast 가져오기
-  const {useMutation, axiosInstance } =useTanstackQuery();
-
+  const { useMutation, axiosInstance } = useTanstackQuery();
 
   // 비밀번호 변경 API 호출 로직
   const { mutate: changePassword } = useMutation({
@@ -34,7 +33,7 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
     onSuccess: (data) => {
       console.log("비밀번호 변경 성공", data);
       addToast({ title: "비밀번호가 성공적으로 변경되었습니다." });
-      onClose();
+      onClose(); // 성공 시 모달 닫기
     },
     onError: (err: any) => {
       console.error("비밀번호 변경 실패", err);
@@ -45,6 +44,7 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
       });
     },
   });
+
   useEffect(() => {
     if (isOpen) {
       // 모달이 열릴 때 비밀번호 입력 필드 초기화
@@ -55,12 +55,33 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
     }
   }, [isOpen]);
 
+  // 비밀번호 변경 처리 함수
   const handleChangePassword = async () => {
+    if (newPassword !== confirmPassword) {
+      setError("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      setLengthError("비밀번호는 8자 이상이어야 합니다.");
+      return;
+    }
+
+    // 비밀번호 변경 API 호출
     changePassword(newPassword);
   };
 
+  // 모달이 닫힐 때 로그인 로직을 차단하는 함수
+  const handleModalClose = () => {
+    setNewPassword(""); // 상태 초기화
+    setConfirmPassword("");
+    setError("");
+    setLengthError("");
+    onClose(); // 모달 닫기
+  };
+
   return (
-    <Modal open={isOpen} onCancel={onClose} theme={theme}>
+    <Modal open={isOpen} onCancel={handleModalClose} theme={theme}>
       <Txt as="h6" style={{ marginBottom: 20 }}>
         비밀번호 변경
       </Txt>
@@ -85,7 +106,8 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
           <Input.TextField
             type="password"
             value={confirmPassword}
-            onChange={(e) => {setConfirmPassword(e.target.value);
+            onChange={(e) => {
+              setConfirmPassword(e.target.value);
               if (e.target.value !== newPassword) {
                 setLengthError("비밀번호가 일치하지 않습니다.");
               } else {
@@ -95,6 +117,7 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
           />
         </Input>
       </V.Container>
+
       {lengthError && (
         <Txt color="red" style={{ marginTop: 10 }}>
           {lengthError}
@@ -117,7 +140,7 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
           비밀번호 변경
         </Button>
         <Button
-          onClick={onClose}
+          onClick={handleModalClose} // 취소 버튼에서 handleModalClose 실행
           style={{
             backgroundColor: "#f0f0f0", // 연한 회색 배경색
             color: "#999", // 회색 텍스트 색상

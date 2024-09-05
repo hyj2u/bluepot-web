@@ -20,18 +20,21 @@ const Login: React.FC = () => {
   const [appStatus, setAppStatus] = useRecoilState(appUserStatusAtom);
   const accessToken = useCookie.get(TOKEN.ACCESS);
   const [isPasswordChangeOpen, setIsPasswordChangeOpen] = useState(false);
+  const [passwordChanged, setPasswordChanged] = useState(false); // 비밀번호 변경 완료 여부
 
   const { mutate: onLogin } = useMutation({
     mutationFn: () => createSignIn({ userId: isValue.id, userPw: isValue.pw }),
     onSuccess: (data) => {
-      // 비밀번호 변경이 필요하면 모달을 열고 상태를 성공으로 설정
       useCookie.set(TOKEN.ACCESS, data?.accessToken);
       useCookie.set(TOKEN.REFRESH, data?.refreshToken);
+
+      // 비밀번호 변경이 필요하면 모달을 열고 리다이렉트하지 않음
       if (data?.requiresPasswordChange) {
         setIsPasswordChangeOpen(true);
       } else {
+        setPasswordChanged(true); // 비밀번호 변경이 필요하지 않으면 바로 완료 상태로
         setAppStatus({ ...appStatus, status: "success" });
-        router.push("/calculate/view"); // 바로 리다이렉트
+        router.push("/calculate/view"); // 비밀번호 변경이 필요 없을 때만 리다이렉트
       }
     },
     onError: (err: any) => {
@@ -42,24 +45,26 @@ const Login: React.FC = () => {
       setIsErr(errorMessage);
     },
   });
+
   const handleOnSubmit = (e: FormEvent) => {
     e.preventDefault();
     onLogin();
   };
 
   useEffect(() => {
-    // 모달이 열려 있는 동안 리다이렉트가 발생하지 않도록 함
-    if (isPasswordChangeOpen) return;
+    // 비밀번호가 변경되지 않았으면 리다이렉트 안 함
+    if (isPasswordChangeOpen || !passwordChanged) return;
 
     // 상태가 성공적이거나 토큰이 존재하는 경우에만 리다이렉트
     if (appStatus.status === "success" || !!accessToken) {
       router.push("/calculate/view");
     }
-  }, [appStatus.status, accessToken, isPasswordChangeOpen, router]);
+  }, [appStatus.status, accessToken, isPasswordChangeOpen, passwordChanged, router]);
+
   return (
     <V.Section>
       <V.Container direction="horizontal">
-      <V.Container
+        <V.Container
           flex={1}
           height="100%"
           minHeight="100vh"
@@ -131,11 +136,12 @@ const Login: React.FC = () => {
           </V.Column>
         </V.Container>
       </V.Container>
+
       <PasswordChangeModal
         isOpen={isPasswordChangeOpen}
         onClose={() => {
           setIsPasswordChangeOpen(false);
-          router.push("/"); // 모달이 닫힐 때 리다이렉트
+          setPasswordChanged(false); // 비밀번호 변경이 완료되지 않았으므로 false로 설정
         }}
       />
     </V.Section>
