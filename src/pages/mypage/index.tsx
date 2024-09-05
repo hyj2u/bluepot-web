@@ -42,6 +42,7 @@ export default function Index() {
     userName: "",
     email: "",
     phone: "",
+    auth: "",
   });
 
   const { userId, userPw, userName, email, phone } = isValues;
@@ -68,6 +69,7 @@ export default function Index() {
         email: data?.email,
         userName: data?.userName,
         phone: data?.phone.replace(/-/g, ""),
+        auth: data?.auth
       });
     },
   });
@@ -84,6 +86,7 @@ export default function Index() {
         userName,
         email,
         phone,
+        auth:isValues.auth
       }),
     onSuccess: (data) => {
       console.log("수정 성공", data);

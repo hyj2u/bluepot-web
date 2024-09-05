@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { ForwardedRef, forwardRef } from "react";
 import ReactToPrint from "react-to-print";
 import { useRecoilValue } from "recoil";
+import { appUserStatusAtom } from "@/libs/atoms/auth-atom";
 
 const Tabs = forwardRef(
   (
@@ -14,7 +15,8 @@ const Tabs = forwardRef(
     const router = useRouter();
     const printActive = useRecoilValue(printActiveAtom);
     const detailData = useRecoilValue(viewDetailAtom);
-
+    const appStatus = useRecoilValue(appUserStatusAtom);
+    console.log(appStatus.rule);
     return (
       <P.BottomFixed height={80} padding={{ horizontal: 20 }}>
         <V.Row gap={8} maxWidth={440}>
@@ -59,7 +61,7 @@ const Tabs = forwardRef(
             />
           )}
 
-          {detailData.settlementTotal.closedYn === "N" && (
+          {(detailData.settlementTotal.closedYn === "N" &&  appStatus.rule!=="ROLE_ACCOUNTANT")&& (
             <Button
               width="100%"
               borderRadius={16}

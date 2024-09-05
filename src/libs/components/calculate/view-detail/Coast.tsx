@@ -26,7 +26,11 @@ export default function Coast() {
   const addFields = useRecoilValue(addTableFieldsAtom);
 
   const 추가버튼유무 =
-    settlementTotal.closedYn === "Y" || appUserStatus.rule === "ROLE_USER"||appUserStatus.rule==="ROLE_ACCOUNTANT";
+    settlementTotal.closedYn === "Y" ||
+    appUserStatus.rule === "ROLE_USER" ||
+    appUserStatus.rule === "ROLE_ACCOUNTANT"
+      ? false
+      : true;
 
   return (
     <V.ScrollDragHorizontal>
@@ -89,8 +93,6 @@ export default function Coast() {
 
         {/* ----------- */}
         {/* ----------- */}
-
-     
 
         {/* ----------- */}
         {/* ----------- */}
@@ -284,7 +286,6 @@ const PrintTitle = ({ data }: { data: any }) => (
       <TxtSpan size={12}>
         점주명 : {data?.owner ? data?.owner : "준비 중 .."}
       </TxtSpan>
-     
 
       <TxtSpan size={12}>
         정산일 : {useMoment(data?.settlementYmd).format("yyyy년mm월dd일")}

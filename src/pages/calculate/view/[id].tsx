@@ -35,8 +35,10 @@ import {
 import { useRouteOnload } from "@/libs/hooks";
 import { useJenga } from "@/_ui/JengaProvider";
 
+import { appUserStatusAtom } from "@/libs/atoms/auth-atom";
+
 //atoms
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState, useRecoilValue} from "recoil";
 import { colors } from "@/libs/themes";
 
 //
@@ -50,6 +52,7 @@ export default function Index() {
   const [detailData, setDetailData] = useRecoilState(viewDetailAtom);
   const setPrintActive = useSetRecoilState(printActiveAtom);
   const setAddTableFields = useSetRecoilState(addTableFieldsAtom);
+  const appStatus = useRecoilValue(appUserStatusAtom);
 
   //
   // 데이터 호출
@@ -167,16 +170,18 @@ export default function Index() {
               </Txt>
 
               <V.Row width="auto" gap={20}>
-        
-
-                <TouchableOpacity
-                  padding={{ all: 4 }}
-                  onClick={() => onUpdateClosedYn()}
-                >
-                  <TxtSpan weight="medium" size={14} color={colors.blue}>
-                    {closedYn === "N" ? "정산 완료하기 >" : "미정산 처리하기 >"}
-                  </TxtSpan>
-                </TouchableOpacity>
+                {appStatus.rule === "ROLE_FRANCHISE" && (
+                  <TouchableOpacity
+                    padding={{ all: 4 }}
+                    onClick={() => onUpdateClosedYn()}
+                  >
+                    <TxtSpan weight="medium" size={14} color={colors.blue}>
+                      {closedYn === "N"
+                        ? "정산 완료하기 >"
+                        : "미정산 처리하기 >"}
+                    </TxtSpan>
+                  </TouchableOpacity>
+                )}
               </V.Row>
             </V.Column>
 
