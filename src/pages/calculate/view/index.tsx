@@ -15,7 +15,9 @@ import { getAllViews, updateViewClosedActive } from "@/_https/calculate/view";
 import { colors } from "@/libs/themes";
 import { useJenga } from "@/_ui/JengaProvider";
 import NoneDataResult from "@/libs/components/custom/NoneDataResult";
-
+// Atoms
+import { appUserStatusAtom } from "@/libs/atoms/auth-atom";
+import { useRecoilValue } from "recoil";
 //
 export default function Index() {
   const router = useRouter();
@@ -25,7 +27,11 @@ export default function Index() {
     useTanstackQuery();
 
   const [tableData, setTableData] = useState([]);
-
+  // Get user role from Recoil state
+  const appUserStatus = useRecoilValue(appUserStatusAtom);
+  
+ // Check if user has ROLE_FRANCHISE
+ const isFranchiseUser = appUserStatus.rule === "ROLE_FRANCHISE";
   //
   // 정산서 데이터
   const { data, isLoading } = useQuery({
@@ -82,72 +88,83 @@ export default function Index() {
 
       <Spacing size={20} />
 
-      <Filter handleFinish={handleFinish} />
-
-      <Spacing size={30} />
-
-      {totalElements === 0 ? (
-        <NoneDataResult title="⛔ 정산서 정보가 존재하지 않습니다" />
+      {/* Show "권한이 없습니다" message if user is ROLE_FRANCHISE */}
+      {isFranchiseUser ? (
+        <V.Column align="center">
+          <Txt size={16} color="red">
+            권한이 없습니다.
+          </Txt>
+        </V.Column>
       ) : (
-        <DragTable>
-          <TheadContainer />
+        <>
+          <Filter handleFinish={handleFinish} />
 
-          {tableData?.map((item: any) => (
-            <TouchableOpacity
-              key={item?.pkey}
-              onClick={() =>
-                router.push({
-                  pathname: `/calculate/view/${item?.pkey}`,
-                  query: {
-                    settlementYmd:
-                      router.query.date ??
-                      useMoment("").previousMonth("yyyy-mm"),
-                  },
-                })
+          <Spacing size={30} />
+
+          {totalElements === 0 ? (
+            <NoneDataResult title="⛔ 정산서 정보가 존재하지 않습니다" />
+          ) : (
+            <DragTable>
+              <TheadContainer />
+
+              {tableData?.map((item: any) => (
+                <TouchableOpacity
+                  key={item?.pkey}
+                  onClick={() =>
+                    router.push({
+                      pathname: `/calculate/view/${item?.pkey}`,
+                      query: {
+                        settlementYmd:
+                          router.query.date ??
+                          useMoment("").previousMonth("yyyy-mm"),
+                      },
+                    })
+                  }
+                >
+                  <TdContainer
+                    width={150}
+                    td={
+                      router.query.date ?? useMoment("").previousMonth("yyyy-mm")
+                    }
+                  />
+                  <TdContainer width={240} td={item.settlementTitle ?? "-"} />
+                  <TdContainer width={250} td={item.storeName} />
+                  <TdContainer width={120} td={item.owner} />
+                  <TdContainer
+                    width={140}
+                    td={useCurrencyPrice(item?.depositAmount)}
+                  />
+                  <TdContainer
+                    width={130}
+                    td={useMoment(item.settlementYmd).format("yyyy-mm-dd")}
+                  />
+                  <TdContainer
+                    width={140}
+                    tdColor={colors.keyColor}
+                    td={
+                      item?.closedYn === "Y"
+                        ? "정산완료 (수정불가)"
+                        : "미정산 (수정가능)"
+                    }
+                  />
+                </TouchableOpacity>
+              ))}
+            </DragTable>
+          )}
+
+          <V.Column align="center" padding={{ top: 30 }}>
+            <Pagination
+              activePage={router?.query?.page ? Number(router?.query?.page) : 1}
+              itemsCountPerPage={10}
+              totalItemsCount={totalElements}
+              pageRangeDisplayed={5}
+              onChange={(pageNumber: any) =>
+                router.push({ query: { ...router?.query, page: pageNumber } })
               }
-            >
-              <TdContainer
-                width={150}
-                td={router.query.date ?? useMoment("").previousMonth("yyyy-mm")}
-              />
-              <TdContainer width={240} td={item.settlementTitle ?? "-"} />
-              <TdContainer width={250} td={item.storeName} />
-              <TdContainer width={120} td={item.owner} />
-              <TdContainer
-                width={140}
-                td={useCurrencyPrice(item?.depositAmount)}
-              />
-              <TdContainer
-                width={130}
-                td={useMoment(item.settlementYmd).format("yyyy-mm-dd")}
-              />
-              <TdContainer
-                width={140}
-                tdColor={colors.keyColor}
-                td={
-                  item?.closedYn === "Y"
-                    ? "정산완료 (수정불가)"
-                    : "미정산 (수정가능)"
-                }
-              />
-            </TouchableOpacity>
-          ))}
-        </DragTable>
+            />
+          </V.Column>
+        </>
       )}
-
-      <V.Column align="center" padding={{ top: 30 }}>
-        <Pagination
-          activePage={router?.query?.page ? Number(router?.query?.page) : 1}
-          itemsCountPerPage={10}
-          totalItemsCount={totalElements}
-          pageRangeDisplayed={5}
-          //hideFirstLastPages={true}
-          //hideNavigation={true}
-          onChange={(pageNumber: any) =>
-            router.push({ query: { ...router?.query, page: pageNumber } })
-          }
-        />
-      </V.Column>
     </View>
   );
 }
@@ -185,4 +202,4 @@ const TdContainer = ({
   );
 };
 
-Index.auth = true;
+Index.auth=true

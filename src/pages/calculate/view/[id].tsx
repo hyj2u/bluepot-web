@@ -170,7 +170,7 @@ export default function Index() {
               </Txt>
 
               <V.Row width="auto" gap={20}>
-                {appStatus.rule === "ROLE_FRANCHISE" && (
+                
                   <TouchableOpacity
                     padding={{ all: 4 }}
                     onClick={() => onUpdateClosedYn()}
@@ -181,7 +181,7 @@ export default function Index() {
                         : "미정산 처리하기 >"}
                     </TxtSpan>
                   </TouchableOpacity>
-                )}
+                
               </V.Row>
             </V.Column>
 
