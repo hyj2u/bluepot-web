@@ -116,7 +116,7 @@ export default function Create() {
             maint: payloadValue("maint"), // 관리비
             businessGuarantee: payloadValue("businessGuarantee"), // 영업보장
             charge: payloadValue("charge"), // 수수료
-            opeNote: payloadValue("opeNote"), // 주요내용
+            openNote: payloadValue("openNote"), // 주요내용
             prepaidRent: payloadValue("prepaidRent"), // 임대로 선납금
             prepaidMonth: payloadValue("prepaidMonth"), // 선납개월수
 

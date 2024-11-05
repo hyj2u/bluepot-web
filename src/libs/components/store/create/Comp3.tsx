@@ -138,10 +138,10 @@ export default function Comp3() {
         <Input.Textarea
           ref={memoRef}
           placeholder="주요내용을 입력하세요"
-          name="opeNote"
+          name="openNote"
           rows={8}
           autoRaise
-          value={isValues.opeNote}
+          value={isValues.openNote}
           onChange={handleOnChange}
         />
       </Input>

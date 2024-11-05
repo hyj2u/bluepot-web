@@ -81,7 +81,7 @@ export default function Logic() {
         maint: store?.maint ?? "", // 관리비
         businessGuarantee: store?.businessGuarantee ?? "", // 영업보장
         charge: store?.charge ?? "", // 수수료
-        opeNote: store?.opeNote ?? "", // 주요내용
+        openNote: store?.openNote ?? "", // 주요내용
         prepaidRent: store?.prepaidRent ?? "", // 임대로 선납금
         prepaidMonth: store?.prepaidMonth ?? "", // 선납개월수
         rentFromYmd: store?.rentFromYmd ?? "", // 임대 시작일

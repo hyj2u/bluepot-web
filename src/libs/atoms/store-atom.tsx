@@ -35,7 +35,7 @@ export const initialStoreValues = {
   maint: "", // 관리비
   businessGuarantee: "", // 영업보장
   charge: "", // 수수료
-  opeNote: "", // 주요내용
+  openNote: "", // 주요내용
   prepaidRent: "", // 임대로 선납금
   prepaidMonth: "", // 선납개월수
   rentFromYmd: "", // 임대 시작일
@@ -95,7 +95,7 @@ export const storeValuesAtom = atom({
     maint: "", // 관리비
     businessGuarantee: "", // 영업보장
     charge: "", // 수수료
-    opeNote: "", // 주요내용
+    openNote: "", // 주요내용
     prepaidRent: "", // 임대로 선납금
     prepaidMonth: "", // 선납개월수
     rentFromYmd: "", // 임대 시작일
