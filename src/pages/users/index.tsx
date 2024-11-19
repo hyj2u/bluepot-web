@@ -25,22 +25,34 @@ export default function Index() {
   useAppVerifiy();
   const router = useRouter();
   const [search, setSearch] = useState("");
+  const [excludeOwners, setExcludeOwners] = useState(true); // 점주 제외 체크박스 상태
+  const [filteredData, setFilteredData] = useState([]); // 필터링된 데이터 상태
   const { axiosInstance, queryKeys, useQuery } = useTanstackQuery();
 
   const queryRoute = { scroll: false, shallow: true };
-  //
-  // 데이터
-  const { data, isLoading } = useQuery({
+
+  // 데이터 가져오기
+  const { data: allData, isLoading } = useQuery({
     queryKey: [queryKeys.users.all, router.query.search],
     queryFn: () => getAllUsers({ axiosInstance, search }),
+    onSuccess: (data) => setFilteredData(data), // 초기 데이터를 필터링 데이터로 설정
   });
+
+  // 점주 제외 체크박스 상태 변경 시 필터링
+  useEffect(() => {
+    if (excludeOwners) {
+      setFilteredData(allData?.filter((user: any) => user.auth !== "점주") || []);
+    } else {
+      setFilteredData(allData || []);
+    }
+  }, [excludeOwners, allData]);
 
   return (
     <View loading={isLoading}>
       <Title as="회원관리" />
       <Spacing size={20} />
 
-      <V.Row maxWidth={440} gap={10}>
+      <V.Row maxWidth={600} gap={10} align="center">
         <Input.SearchField
           placeholder="이름/이메일/연락처 검색"
           value={search}
@@ -48,7 +60,11 @@ export default function Index() {
           tab={{
             name: "검색",
             onClick: () =>
-              router.replace({ query: { search } }, undefined, queryRoute),
+              router.replace(
+                { query: { search } },
+                undefined,
+                queryRoute
+              ),
           }}
           cancelTab={{
             view: !!router.query.search,
@@ -70,6 +86,17 @@ export default function Index() {
         >
           회원추가
         </TouchableOpacity>
+
+        {/* 점주 제외하기 체크박스 */}
+        <V.Row align="center" gap={8}>
+          <input
+            type="checkbox"
+            checked={excludeOwners}
+            onChange={(e) => setExcludeOwners(e.target.checked)}
+            style={{ cursor: "pointer" }}
+          />
+          <TxtSpan size={14}>점주 제외하기</TxtSpan>
+        </V.Row>
       </V.Row>
 
       <Spacing size={30} />
@@ -79,7 +106,7 @@ export default function Index() {
         loading={isLoading}
         ListLoadingComponent={<LoadingSpinner />}
         ListEmptyComponent={<NoneView />}
-        data={data}
+        data={filteredData} // 필터링된 데이터 사용
         keyExtractor={(i) => i}
         renderItem={(item) => (
           <TouchableOpacity
