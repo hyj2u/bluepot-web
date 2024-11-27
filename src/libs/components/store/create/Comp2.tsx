@@ -47,11 +47,11 @@ export default function Comp2() {
 
   //
   // 공통 핸들러
-  const SUCCESS = (data: any, type: "사업자등록증" | "보고서" | "이미지") => {
+  const SUCCESS = (data: any, type: "보험증권" | "보고서" | "이미지") => {
     console.log(type + " 업로드성공", data);
     addToast({ title: type + " 업로드를 성공" });
 
-    if (type === "사업자등록증") {
+    if (type === "보험증권") {
       queryClient.invalidateQueries([queryKeys.store.detail]);
       queryClient.invalidateQueries([queryKeys.store.create.files1]);
     }
@@ -81,7 +81,7 @@ export default function Comp2() {
       mutationFn: (file: any) =>
         uploadStoreFiles({ ...configs, file, fileType: "business_num" }),
       onSuccess: (data: any) => {
-        SUCCESS(data, "사업자등록증");
+        SUCCESS(data, "보험증권");
         setIsFiles({
           ...isFiles,
           business: { name: data?.fileName, key: data?.pkey },
@@ -125,7 +125,7 @@ export default function Comp2() {
           fileType: "business_num",
           filename: isFiles.business.name,
         }),
-      onSuccess: (data: any) => console.log("사업자등록증 다운완료", data),
+      onSuccess: (data: any) => console.log("보험증권 다운완료", data),
     });
 
   //
@@ -207,7 +207,7 @@ export default function Comp2() {
     <Box title="기본정보 (파일 업로드)">
       {/* // 사업자등록증 */}
       <TouchableOpacity css={themes.touO}>
-        사업자등록증 {business_upload_loading ? "다운로드 중 .." : "업로드"}{" "}
+      보험증권 {business_upload_loading ? "다운로드 중 .." : "업로드"}{" "}
         {loading_business_file && "중 .."}{" "}
         <input
           type="file"

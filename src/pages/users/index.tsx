@@ -31,21 +31,37 @@ export default function Index() {
 
   const queryRoute = { scroll: false, shallow: true };
 
+  // 필터 데이터 처리 함수
+  const filterData = (data: any) => {
+    if (excludeOwners) {
+      return data?.filter((user: any) => user.auth !== "점주") || [];
+    }
+    return data || [];
+  };
+
   // 데이터 가져오기
   const { data: allData, isLoading } = useQuery({
     queryKey: [queryKeys.users.all, router.query.search],
     queryFn: () => getAllUsers({ axiosInstance, search }),
-    onSuccess: (data) => setFilteredData(data), // 초기 데이터를 필터링 데이터로 설정
+    staleTime: 5000, // 데이터 캐싱 시간 설정
+    onSuccess: (data) => setFilteredData(filterData(data)), // 초기 데이터를 필터링 데이터로 설정
   });
 
-  // 점주 제외 체크박스 상태 변경 시 필터링
+  // 점주 제외 상태 변경 시 필터링
   useEffect(() => {
-    if (excludeOwners) {
-      setFilteredData(allData?.filter((user: any) => user.auth !== "점주") || []);
-    } else {
-      setFilteredData(allData || []);
-    }
+    setFilteredData(filterData(allData));
   }, [excludeOwners, allData]);
+
+  // 점주 제외 상태 변경 함수
+  const toggleExcludeOwners = () => {
+    const newExcludeOwners = !excludeOwners;
+    setExcludeOwners(newExcludeOwners);
+    router.replace(
+      { query: { ...router.query, excludeOwners: newExcludeOwners } },
+      undefined,
+      queryRoute
+    );
+  };
 
   return (
     <View loading={isLoading}>
@@ -92,7 +108,7 @@ export default function Index() {
           <input
             type="checkbox"
             checked={excludeOwners}
-            onChange={(e) => setExcludeOwners(e.target.checked)}
+            onChange={toggleExcludeOwners}
             style={{ cursor: "pointer" }}
           />
           <TxtSpan size={14}>점주 제외하기</TxtSpan>
