@@ -21,17 +21,30 @@ import { useRecoilValue } from "recoil";
 //
 export default function Index() {
   const router = useRouter();
+  const [isReady, setIsReady] = useState(false);
   const { addToast } = useJenga();
-  const { search, page, type, date } = router.query ?? {};
+  const { date, type, search, page } = {
+    date: router.query.date || useMoment("").previousMonth("yyyy-mm"),
+    type: router.query.type || "yyyy-mm",
+    search: router.query.search || "",
+    page: router.query.page || 1,
+  };
+  // Router 준비 상태 확인
+  //useEffect(() => {
+  // if (router.isReady) {
+  //  setIsReady(true);
+  // }
+  //}, [router.isReady]);
+  //if (!isReady) return null; // Router 준비 전에는 아무것도 렌더링하지 않음
   const { axiosInstance, useQuery, useMutation, queryKeys, queryClient } =
     useTanstackQuery();
 
   const [tableData, setTableData] = useState([]);
   // Get user role from Recoil state
   const appUserStatus = useRecoilValue(appUserStatusAtom);
-  
- // Check if user has ROLE_FRANCHISE
- const isFranchiseUser = appUserStatus.rule === "ROLE_FRANCHISE";
+
+  // Check if user has ROLE_FRANCHISE
+  const isFranchiseUser = appUserStatus.rule === "ROLE_FRANCHISE";
   //
   // 정산서 데이터
   const { data, isLoading } = useQuery({
@@ -124,7 +137,8 @@ export default function Index() {
                   <TdContainer
                     width={150}
                     td={
-                      router.query.date ?? useMoment("").previousMonth("yyyy-mm")
+                      router.query.date ??
+                      useMoment("").previousMonth("yyyy-mm")
                     }
                   />
                   <TdContainer width={240} td={item.settlementTitle ?? "-"} />
@@ -202,4 +216,4 @@ const TdContainer = ({
   );
 };
 
-Index.auth=true
+Index.auth = true;

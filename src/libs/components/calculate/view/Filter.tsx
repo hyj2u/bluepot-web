@@ -83,14 +83,14 @@ export default function Filter(props: { handleFinish: any }) {
                 name: "검색",
                 onClick: () =>
                   router.replace({
-                    query: { ...router.query, search: isSearch },
+                    query: { ...router.query, search: isSearch, page:1 },
                   }),
               }}
               cancelTab={{
                 view: !!search,
                 onClick: () => {
                   setIsSearch("");
-                  router.replace({ query: { ...router.query, search: "" } });
+                  router.replace({ query: { ...router.query, search: "" , page:1} });
                 },
               }}
             />
