@@ -10,7 +10,7 @@ export default function Filter({ onDownloadExcel }: { onDownloadExcel: any }) {
     <>
       <V.Row gap={16} maxWidth={260}>
         <Select
-          options={["2023", "2024"]}
+          options={["2023", "2024", "2025"]}
           value={router.query.date ?? "2024"}
           onChange={(e: ChangeEvent<HTMLSelectElement>) =>
             router.replace({ query: { date: e.target.value } }, undefined, {

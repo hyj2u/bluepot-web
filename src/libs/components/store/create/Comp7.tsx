@@ -37,7 +37,7 @@ export default function Comp7() {
   return (
     <Box title="정산정보">
       <Select
-        options={["2023", "2024"]}
+        options={["2023", "2024", "2025"]}
         value={year}
         onChange={(e) => setYear(e.target.value)}
         renderItem={(item: string) => (
