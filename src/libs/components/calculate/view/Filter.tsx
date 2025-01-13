@@ -1,4 +1,12 @@
-import { CalenderModal, Input, V, TouchableOpacity, TxtSpan, Txt } from "@/_ui";
+import {
+  CalenderModal,
+  Input,
+  V,
+  TouchableOpacity,
+  TxtSpan,
+  Txt,
+  Checkbox,
+} from "@/_ui";
 import CalenderIcon from "@/libs/assets/icon-stroke/calender-icon";
 import { appUserStatusAtom } from "@/libs/atoms/auth-atom";
 import { useMoment } from "@/libs/hooks/useMoment";
@@ -12,7 +20,8 @@ export default function Filter(props: { handleFinish: any }) {
 
   const router = useRouter();
   const { date, type, search } = router.query ?? {};
-
+  // activeYn 기본값을 'Y'로 설정
+  const activeYn = router.query.activeYn ?? "Y";
   const [isSearch, setIsSearch] = useState(search ? search : "");
   const [isCalenderOpen, setIsCalenderOpen] = useState(false);
 
@@ -83,20 +92,39 @@ export default function Filter(props: { handleFinish: any }) {
                 name: "검색",
                 onClick: () =>
                   router.replace({
-                    query: { ...router.query, search: isSearch, page:1 },
+                    query: { ...router.query, search: isSearch, page: 1 },
                   }),
               }}
               cancelTab={{
                 view: !!search,
                 onClick: () => {
                   setIsSearch("");
-                  router.replace({ query: { ...router.query, search: "" , page:1} });
+                  router.replace({
+                    query: { ...router.query, search: "", page: 1 },
+                  });
                 },
               }}
             />
           </V.Row>
-
-          {(appUserStatus.rule === "ROLE_ADMIN" || appUserStatus.rule === "ROLE_MANAGER" ) && (
+          <V.Row gap={20} align="center">
+            {/* 오픈매장 체크박스 */}
+            <V.Container width="auto" minWidth={81}>
+              <Checkbox
+                label={{ title: "오픈매장" }}
+                checked={activeYn === "Y"}
+                onChange={() =>
+                  router.replace({
+                    query: {
+                      ...router.query,
+                      activeYn: activeYn === "Y" ? "N" : "Y",
+                    },
+                  })
+                }
+              />
+            </V.Container>
+          </V.Row>
+          {(appUserStatus.rule === "ROLE_ADMIN" ||
+            appUserStatus.rule === "ROLE_MANAGER") && (
             <>
               <TouchableOpacity
                 minHeight={50}

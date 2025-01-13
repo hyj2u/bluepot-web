@@ -7,10 +7,11 @@ export const getAllViews = async ({
   date = useMoment("").previousMonth,
   search = "",
   page=1,
-}: AxiosType & { date: any; search?: any; page?: any }) => {
+  activeYn = "Y", // 기본값 "Y" 추가
+}: AxiosType & { date: any; search?: any; page?: any; activeYn?: string  }) => {
   try {
     const result = await axiosInstance.get(
-      `/settle?settlementYmd=${date}&search=${search}&page=${page}`
+      `/settle?settlementYmd=${date}&search=${search}&page=${page}&activeYn=${activeYn}`
     );
     return result.data;
   } catch (error) {

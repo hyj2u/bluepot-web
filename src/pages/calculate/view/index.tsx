@@ -23,11 +23,12 @@ export default function Index() {
   const router = useRouter();
   const [isReady, setIsReady] = useState(false);
   const { addToast } = useJenga();
-  const { date, type, search, page } = {
+  const { date, type, search, page, activeYn } = {
     date: router.query.date || useMoment("").previousMonth("yyyy-mm"),
     type: router.query.type || "yyyy-mm",
     search: router.query.search || "",
     page: router.query.page || 1,
+    activeYn: router.query.activeYn || "Y"
   };
   // Router 준비 상태 확인
   //useEffect(() => {
@@ -57,6 +58,7 @@ export default function Index() {
           : useMoment("").previousMonth("yyyy-mm") + "-01",
         search: search,
         page: router.query.page ?? 1,
+        activeYn: activeYn,
       }),
     onSuccess: (data) => setTableData(data?.data?.settlements),
     refetchOnWindowFocus: true,
