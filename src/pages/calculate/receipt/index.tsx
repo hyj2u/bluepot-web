@@ -23,11 +23,16 @@ export default function Index() {
   const tableRef = useRef<HTMLTableElement>(null);
   const router = useRouter();
   const { queryKeys, useQuery, axiosInstance } = useTanstackQuery();
-
+ // activeYn 기본값 설정
+ const activeYn = router.query.activeYn ?? "Y";
   const { data, isLoading } = useQuery({
-    queryKey: [queryKeys.calculate.receipts.all, router.query.date],
+    queryKey: [queryKeys.calculate.receipts.all, router.query.date, activeYn],
     queryFn: () =>
-      getAllReceipts({ axiosInstance, date: router.query.date ?? "2024" }),
+      getAllReceipts({
+        axiosInstance,
+        date: router.query.date ?? "2024",
+        activeYn, // activeYn 전달
+      }),
   });
 
   const exportToExcel = useExportToExcel();
@@ -37,6 +42,13 @@ export default function Index() {
     (router.query.date ?? "2024") +
     "년" +
     ".xlsx";
+      // activeYn 상태 변경 함수
+  const handleActiveYnChange = (newActiveYn: string) => {
+    router.replace({
+      query: { ...router.query, activeYn: newActiveYn },
+    });
+  };
+
 
   return (
     <View loading={isLoading}>
@@ -44,7 +56,10 @@ export default function Index() {
 
       <Spacing size={20} />
 
-      <Filter onDownloadExcel={() => exportToExcel(tableRef, excelFileName)} />
+      <Filter onDownloadExcel={() => exportToExcel(tableRef, excelFileName)}
+       activeYn={activeYn}
+       onActiveYnChange={handleActiveYnChange} // 상태 변경 함수 전달
+       />
 
       <Spacing size={30} />
       <DragTable>

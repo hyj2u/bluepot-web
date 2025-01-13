@@ -3,9 +3,12 @@
 export const getAllReceipts = async ({
   axiosInstance,
   date,
-}: AxiosType & { date: any }) => {
+  activeYn = "Y", // 기본값 "Y" 추가
+}: AxiosType & { date: any; activeYn?: string }) => {
   try {
-    const { data } = await axiosInstance.get(`/sum/total?year=${date}`);
+    const { data } = await axiosInstance.get(
+      `/sum/total?year=${date}&activeYn=${activeYn}` // activeYn 쿼리 파라미터 추가
+    );
     return data?.data;
   } catch (error) {
     throw error;

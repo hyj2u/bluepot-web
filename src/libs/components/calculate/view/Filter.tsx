@@ -107,7 +107,7 @@ export default function Filter(props: { handleFinish: any }) {
             />
           </V.Row>
           <V.Row gap={20} align="center">
-            {/* 오픈매장 체크박스 */}
+            {/* 매장 체크박스 */}
             <V.Container width="auto" minWidth={81}>
               <Checkbox
                 label={{ title: "오픈매장" }}
