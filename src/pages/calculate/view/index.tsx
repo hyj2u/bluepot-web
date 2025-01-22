@@ -23,13 +23,15 @@ export default function Index() {
   const router = useRouter();
   const [isReady, setIsReady] = useState(false);
   const { addToast } = useJenga();
-  const { date, type, search, page, activeYn } = {
+  const { date, type, search, page } = {
     date: router.query.date || useMoment("").previousMonth("yyyy-mm"),
     type: router.query.type || "yyyy-mm",
     search: router.query.search || "",
     page: router.query.page || 1,
-    activeYn: router.query.activeYn || "Y"
+  
   };
+  const activeYn: string = (router.query.activeYn as string) || "Y";
+
   // Router 준비 상태 확인
   //useEffect(() => {
   // if (router.isReady) {

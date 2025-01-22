@@ -24,7 +24,7 @@ export default function Index() {
   const router = useRouter();
   const { queryKeys, useQuery, axiosInstance } = useTanstackQuery();
  // activeYn 기본값 설정
- const activeYn = router.query.activeYn ?? "Y";
+ const activeYn: string = (router.query.activeYn as string) || "Y";
   const { data, isLoading } = useQuery({
     queryKey: [queryKeys.calculate.receipts.all, router.query.date, activeYn],
     queryFn: () =>

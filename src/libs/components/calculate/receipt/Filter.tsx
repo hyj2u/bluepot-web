@@ -1,4 +1,4 @@
-import { Select, TouchableOpacity, TxtSpan, V, Checkbox } from "@/_ui";
+import { Select, TouchableOpacity, TxtSpan, V, Checkbox, Txt } from "@/_ui";
 import { ExcelIcon } from "@/libs/assets/icon-color";
 import { useRouter } from "next/router";
 import { ChangeEvent } from "react";
@@ -53,13 +53,16 @@ export default function Filter({
             엑셀 다운로드
           </TxtSpan>
         </TouchableOpacity>
-          {/* 매장 체크박스 */}
-          <V.Row align="center" gap={8}>
+           {/* 매장 체크박스 */}
+           <V.Row align="center" gap={8}>
           <Checkbox
-            label={{ title: "폐점매장 제외" }}
             checked={activeYn === "Y"}
             onChange={() => onActiveYnChange(activeYn === "Y" ? "N" : "Y")}
           />
+          <Txt size={14}>
+            폐점매장 및<br />
+            로드매장 제외
+          </Txt>
         </V.Row>
       </V.Row>
     </>
