@@ -25,7 +25,7 @@ export default function Comp7() {
   const storeType = useRecoilValue(store_type_atom);
   const { storeCode } = storeType ?? "";
 
-  const [year, setYear] = useState("2024");
+  const [year, setYear] = useState("2025");
   const { axiosInstance, useQuery, queryKeys } = useTanstackQuery();
 
   const { data, isLoading } = useQuery({

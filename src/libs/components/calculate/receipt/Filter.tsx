@@ -19,7 +19,7 @@ export default function Filter({
         {/* 연도 선택 Select */}
         <Select
           options={["2023", "2024", "2025"]}
-          value={router.query.date ?? "2024"}
+          value={router.query.date ?? "2025"}
           onChange={(e: ChangeEvent<HTMLSelectElement>) =>
             router.replace(
               { query: { ...router.query, date: e.target.value } },

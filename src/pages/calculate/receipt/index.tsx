@@ -30,7 +30,7 @@ export default function Index() {
     queryFn: () =>
       getAllReceipts({
         axiosInstance,
-        date: router.query.date ?? "2024",
+        date: router.query.date ?? "2025",
         activeYn, // activeYn 전달
       }),
   });
@@ -39,7 +39,7 @@ export default function Index() {
   const excelFileName =
     "입금/세금계산서/총괄표" +
     "_" +
-    (router.query.date ?? "2024") +
+    (router.query.date ?? "2025") +
     "년" +
     ".xlsx";
       // activeYn 상태 변경 함수

@@ -106,11 +106,9 @@ export default function Filter(props: { handleFinish: any }) {
               }}
             />
           </V.Row>
-          <V.Row gap={20} align="center">
-            {/* 매장 체크박스 */}
-            <V.Container width="auto" minWidth={81}>
+          <V.Row gap={8} align="center">
+            <V.Row align="center" style={{ whiteSpace: "nowrap", gap: 4 }}>
               <Checkbox
-                label={{ title: "오픈매장" }}
                 checked={activeYn === "Y"}
                 onChange={() =>
                   router.replace({
@@ -121,7 +119,10 @@ export default function Filter(props: { handleFinish: any }) {
                   })
                 }
               />
-            </V.Container>
+              <Txt size={14} style={{ whiteSpace: "nowrap" }}>
+                오픈매장 (로드매장제외)
+              </Txt>
+            </V.Row>
           </V.Row>
           {(appUserStatus.rule === "ROLE_ADMIN" ||
             appUserStatus.rule === "ROLE_MANAGER") && (
