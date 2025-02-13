@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 //libs
 import Box from "./Box";
-import { CalenderModal, Input, Select, Spacing, V } from "@/_ui";
+import { CalenderModal, Input, Select, Spacing, V, Checkbox } from "@/_ui";
 import { MQ } from "@/libs/themes";
 
 //atoms
@@ -25,8 +25,8 @@ export default function Comp1() {
     writtenContractYmd: false,
     finalContractYmd: false,
   });
+  
 
-  //
   // 옵션 > 정산구분
   const { data: brandCd_options } = useQuery({
     queryKey: [queryKeys.store.create.brandCd, isValues.brandCd],
@@ -326,6 +326,20 @@ export default function Comp1() {
             onChange={handleOnChange}
           />
         </Input>
+        <Spacing size={20} />
+
+        <V.Row align="center" gap={10}>
+          <Checkbox
+            label={{ title: "기부금 대상 여부" }}
+            checked={isValues.donationYn === "Y"}
+            onChange={() =>
+              setIsValues({
+                ...isValues,
+                donationYn: isValues.donationYn === "Y" ? "N" : "Y",
+              })
+            }
+          />
+        </V.Row>
       </Box>
 
       {/* // 오픈일 > 달력 모달 */}
