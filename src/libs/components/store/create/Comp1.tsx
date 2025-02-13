@@ -331,11 +331,11 @@ export default function Comp1() {
         <V.Row align="center" gap={10}>
           <Checkbox
             label={{ title: "기부금 대상 여부" }}
-            checked={isValues.donationYn === "Y"}
+            checked={(isValues.donationYn ?? "N") === "Y"} //  null이면 "N" 처리
             onChange={() =>
               setIsValues({
                 ...isValues,
-                donationYn: isValues.donationYn === "Y" ? "N" : "Y",
+                donationYn: (isValues.donationYn ?? "N") === "Y" ? "N" : "Y",
               })
             }
           />
