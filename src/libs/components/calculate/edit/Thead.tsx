@@ -35,7 +35,7 @@ export default function Thead() {
           {findTh("b1internet") && (
             <V.Container css={thTheme}>인터넷</V.Container>
           )}
-            {findTh("b1etcExpense") && (
+          {findTh("b1etcExpense") && (
             <V.Container css={thTheme}>기타경비</V.Container>
           )}
           {findTh("b2charge") && (
@@ -44,6 +44,9 @@ export default function Thead() {
           {findTh("b3etc") && <V.Container css={thTheme}>기타비품</V.Container>}
           {findTh("b4initProduct") && (
             <V.Container css={thTheme}>초도물품대</V.Container>
+          )}
+          {findTh("b4donation") && (
+            <V.Container css={thTheme}>기부금</V.Container>
           )}
           <V.Container css={thTheme}>원부자재(과세)</V.Container>
         </V.Row>
@@ -93,6 +96,9 @@ export default function Thead() {
           {findTh("d3rent") && <V.Container css={thTheme}>임대료</V.Container>}
           {findTh("d3initProduct") && (
             <V.Container css={thTheme}>초도물품대</V.Container>
+          )}
+          {findTh("d4donation") && (
+            <V.Container css={thTheme}>기부금</V.Container>
           )}
         </V.Row>
       </V.Column>

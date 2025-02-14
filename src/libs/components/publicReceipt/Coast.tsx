@@ -215,6 +215,11 @@ export const Coast = ({ data }: { data: any }) => {
             note: data?.b4initProductNote,
           },
           {
+            title: "기부금",
+            val: data?.b4donation,
+            note: data?.b4donationNote,
+          },
+          {
             title: data?.b4extra1name,
             val: data?.b4extra1,
             note: data?.b4extra1note,

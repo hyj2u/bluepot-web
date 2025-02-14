@@ -122,6 +122,7 @@ export default function Coast() {
 
         <TitleTr category="B_4" />
         <Tr {...table.초도물품대} />
+        <Tr {...table.기부금} />
         {addFields.includes("b4extra1") && <AddTr {...table.b4extra1} />}
         {addFields.includes("b4extra2") && <AddTr {...table.b4extra2} />}
         {addFields.includes("b4extra3") && <AddTr {...table.b4extra3} />}

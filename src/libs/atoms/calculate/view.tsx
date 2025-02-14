@@ -32,7 +32,8 @@ type settlementTotalType = {
   b3etcNote: any;
   b4initProduct: any;
   b4initProductNote: any;
-
+  b4donation: any;
+  b4donationNote: any;
   c1cardFee: any;
   c1cardFeeNote: any;
   c1rent: any;
@@ -99,7 +100,8 @@ export const initialSettlementTotal = {
   b3etcNote: null,
   b4initProduct: 0,
   b4initProductNote: null,
-
+  b4donation: 0,
+  b4donationNote: null,
   c1cardFee: 0,
   c1cardFeeNote: null,
   c1rent: 0,
