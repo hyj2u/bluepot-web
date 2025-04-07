@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 //libs
 import Box from "./Box";
@@ -34,6 +34,10 @@ export default function Comp1() {
       getStoreBrandCdKind({ axiosInstance, brandCd: isValues.brandCd }),
     enabled: !!isValues.brandCd,
   });
+    //donationYn 상태 확인용 useEffect
+    useEffect(() => {
+      console.log("💡 현재 donationYn 상태:", isValues.donationYn);
+    }, [isValues.donationYn]);
 
   //
   // 인풋 핸들러
@@ -41,6 +45,7 @@ export default function Comp1() {
     const { value, name } = e.target;
     setIsValues({ ...isValues, [name]: value });
   };
+
 
   return (
     <>
@@ -327,7 +332,6 @@ export default function Comp1() {
           />
         </Input>
         <Spacing size={20} />
-
         <V.Row align="center" gap={10}>
           <Checkbox
             label={{ title: "기부금 대상 여부" }}
