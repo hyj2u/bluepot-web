@@ -32,6 +32,8 @@ type settlementTotalType = {
   b3etcNote: any;
   b4initProduct: any;
   b4initProductNote: any;
+  b4donation: any;
+  b4donationNote: any;
 
   c1cardFee: any;
   c1cardFeeNote: any;

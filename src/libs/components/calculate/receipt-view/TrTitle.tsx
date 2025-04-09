@@ -60,6 +60,7 @@ export default function TrTitle({ title, data }: Props) {
 
   const B_기타 =
     data?.b4initProduct +
+    data?.b4donation+
     data?.b4extra1 +
     data?.b4extra2 +
     data?.b4extra3 +

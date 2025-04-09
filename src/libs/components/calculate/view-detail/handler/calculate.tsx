@@ -29,6 +29,7 @@ export default function calculates() {
 
   const 기타 =
     (val?.b4initProduct ?? 0) +
+    (val?.b4donation ?? 0) +
     (val?.b4extra1 ?? 0) +
     (val?.b4extra2 ?? 0) +
     (val?.b4extra3 ?? 0) +
