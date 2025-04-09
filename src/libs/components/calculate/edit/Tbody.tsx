@@ -82,7 +82,8 @@ export default function Tbody({ data }: { data: any }) {
 
       {/* 매출원가 > 초도물품대 */}
       {TdContainer({ key: "b4initProduct", value: data?.b4initProduct })}
-
+      {/* 매출원가 > 기부금 */}
+      {TdContainer({ key: "b4donation", value: data?.b4donation })}
       {/* 매출원가 > 원부자재 */}
       {TdContainer({ cate: "b3material", value: data?.b3material })}
 

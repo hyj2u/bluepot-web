@@ -39,6 +39,7 @@ export const initialStoreValues = {
   prepaidRent: "", // 임대로 선납금
   prepaidMonth: "", // 선납개월수
   rentFromYmd: "", // 임대 시작일
+  donationYn: "N", //기부금대상 여부
 
   contracts: [], // 계약 시작일/종료일/임대료
 };
@@ -99,7 +100,7 @@ export const storeValuesAtom = atom({
     prepaidRent: "", // 임대로 선납금
     prepaidMonth: "", // 선납개월수
     rentFromYmd: "", // 임대 시작일
-
+    donationYn: "N", //기부금대상 여부
     contracts: [], // 계약 시작일/종료일/임대료
   },
 });

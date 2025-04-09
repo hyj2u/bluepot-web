@@ -45,6 +45,9 @@ export default function Thead() {
           {findTh("b4initProduct") && (
             <V.Container css={thTheme}>초도물품대</V.Container>
           )}
+          {findTh("b4donation") && (
+            <V.Container css={thTheme}>기부금</V.Container>
+          )}
           <V.Container css={thTheme}>원부자재(과세)</V.Container>
         </V.Row>
       </V.Column>
@@ -93,6 +96,9 @@ export default function Thead() {
           {findTh("d3rent") && <V.Container css={thTheme}>임대료</V.Container>}
           {findTh("d3initProduct") && (
             <V.Container css={thTheme}>초도물품대</V.Container>
+          )}
+         {findTh("b4donation") && (
+            <V.Container css={thTheme}>기부금</V.Container>
           )}
         </V.Row>
       </V.Column>

@@ -214,6 +214,13 @@ export default function Enum() {
       note: calcVal.b4initProductNote,
       valKey: "b4initProduct",
     },
+    기부금: {
+      t: "기부금",
+      aVal: null,
+      bVal: calcVal.b4donation,
+      note: calcVal.b4donationNote,
+      valKey: "b4donation",
+    },
     b4extra1: {
       t: calcVal?.b4extra1name,
       aVal: null,
