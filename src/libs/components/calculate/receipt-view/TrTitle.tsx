@@ -24,15 +24,7 @@ type Props = {
 
 //
 export default function TrTitle({ title, data }: Props) {
-  const A =
-    data?.a1cash +
-    data?.a1tax +
-    data?.a1card +
-    data?.a1extra1 +
-    data?.a1extra2 +
-    data?.a1extra3 +
-    data?.a1extra4 +
-    data?.a1extra5;
+  const A =data?.atotal;
 
   const B_운영제경비 =
     data?.b1rent +
@@ -67,7 +59,7 @@ export default function TrTitle({ title, data }: Props) {
     data?.b4extra4 +
     data?.b4extra5;
 
-  const B = B_운영제경비 + B_수수료 + B_상품대 + B_기타;
+  const B = data?.btotal;
 
   const C_기타제경비 =
     data?.c1cardFee +
@@ -91,9 +83,9 @@ export default function TrTitle({ title, data }: Props) {
     data?.c2extra4 +
     data?.c2extra5;
 
-  const C = A - B;
+  const C = data?.settlementAmount;
 
-  const D = A - B - C_기타제경비 - C_기타;
+  const D = data?.salesProfit;
 
   const D_미지급금 =
     data?.d1storeMaint +
@@ -122,7 +114,7 @@ export default function TrTitle({ title, data }: Props) {
     data?.d3extra4 +
     data?.d3extra5;
 
-  const E = D - D_미지급금 - D_선수금 + D_선급금;
+  const E = data?.depositAmount;
 
   //
   if (title === "상품매출액") return <TrComp title="A. 상품매출액" 대변={A} />;

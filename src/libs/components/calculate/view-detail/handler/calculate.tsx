@@ -85,40 +85,31 @@ export default function calculates() {
     (val?.d3extra4 ?? 0) +
     (val?.d3extra5 ?? 0);
 
-  ////////
-  ////////
+  const A = val?.atotal;
+  const B = val?.btotal;
+  const C = val?.settlementAmount;
+  const D = val?.salesProfit;
+  const E = val?.depositAmount;
 
-  const A =
-    (val?.a1card ?? 0) +
-    (val?.a1tax ?? 0) +
-    (val?.a1cash ?? 0) +
-    (val?.a1extra1 ?? 0) +
-    (val?.a1extra2 ?? 0) +
-    (val?.a1extra3 ?? 0) +
-    (val?.a1extra4 ?? 0) +
-    (val?.a1extra5 ?? 0);
-
-  const B = {
-    매출원가: 운영제경비 + val?.b2charge + 상품대 + 기타,
-    운영제경비,
-    상품대,
-    기타,
+  return {
+    A,
+    B: {
+      매출원가: B,
+      운영제경비,
+      상품대,
+      기타,
+    },
+    C: {
+      정산금액: C,
+      기타제경비,
+      기타: 기타2,
+    },
+    D: {
+      매출이익: D,
+      미지급금,
+      선수금,
+      선급금,
+    },
+    E,
   };
-
-  const C = {
-    정산금액: A - B.매출원가,
-    기타제경비,
-    기타: 기타2,
-  };
-
-  const D = {
-    매출이익: C.정산금액 - C.기타제경비 - C.기타,
-    미지급금,
-    선수금,
-    선급금,
-  };
-
-  const E = D.매출이익 - 미지급금 - 선수금 + 선급금;
-
-  return { A, B, C, D, E };
 }
