@@ -109,10 +109,11 @@ export default function Create() {
             etc: payloadValue("etc"), // 비고
             fireInsurance: payloadValue("fireInsurance"), // 화재보험증권번호
             disasterInsurance: payloadValue("disasterInsurance"), // 재난배상책임보험
+            donationYn: payloadValue("donationYn"),
             storeSize: payloadValue("storeSize"), // 실평수
             deposit: payloadValue("deposit"), // 보증금
             vat: payloadValue("vat"), // 부가세
-
+            
             maint: payloadValue("maint"), // 관리비
             businessGuarantee: payloadValue("businessGuarantee"), // 영업보장
             charge: payloadValue("charge"), // 수수료

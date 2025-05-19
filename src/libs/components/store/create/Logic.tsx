@@ -74,6 +74,7 @@ export default function Logic() {
         etc: store?.etc ?? "", // 비고
         fireInsurance: store?.fireInsurance ?? "", // 화재보험증권번호
         disasterInsurance: store?.disasterInsurance ?? "", // 재난배상책임보험
+        donationYn: store?.donationYn ?? "", 
         storeSize: store?.storeSize ?? "", // 실평수
         deposit: store?.deposit ?? "", // 보증금
         vat: store?.vat ?? "", // 부가세
