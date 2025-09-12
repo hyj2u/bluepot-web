@@ -6,4 +6,5 @@ import { HTTPS_API } from "./index";
 export const API = axios.create({
   baseURL: HTTPS_API,
   headers: { "Content-Type": "application/json" },
+  withCredentials: true,
 });
