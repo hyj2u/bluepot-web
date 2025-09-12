@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 
-//libs
+// libs
 import Box from "./Box";
 import { CalenderModal, Input, Select, Spacing, V, Checkbox } from "@/_ui";
 import { MQ } from "@/libs/themes";
 
-//atoms
+// atoms
 import { useRecoilState } from "recoil";
 import { storeValuesAtom } from "@/libs/atoms/store-atom";
 
-//hooks
+// hooks
 import { useTanstackQuery } from "@/libs/hooks/useTanstackQuery";
 import { getStoreBrandCdKind } from "@/_https/store";
 import { useMoment } from "@/libs/hooks";
 import { regEx } from "@/libs/utils/regEx";
 
-//
 export default function Comp1() {
   const { useQuery, queryKeys, axiosInstance } = useTanstackQuery();
   const [isValues, setIsValues] = useRecoilState(storeValuesAtom);
@@ -25,9 +24,7 @@ export default function Comp1() {
     writtenContractYmd: false,
     finalContractYmd: false,
   });
-  
 
-  // 옵션 > 정산구분
   const { data: brandCd_options } = useQuery({
     queryKey: [queryKeys.store.create.brandCd, isValues.brandCd],
     queryFn: () =>
@@ -39,11 +36,9 @@ export default function Comp1() {
       console.log("💡 현재 donationYn 상태:", isValues.donationYn);
     }, [isValues.donationYn]);
 
-  //
-  // 인풋 핸들러
   const handleOnChange = (e: React.ChangeEvent<any>) => {
     const { value, name } = e.target;
-    setIsValues({ ...isValues, [name]: value });
+    setIsValues((prev) => ({ ...prev, [name]: value }));
   };
 
 
@@ -56,11 +51,11 @@ export default function Comp1() {
             name="brandCd"
             value={isValues.brandCd}
             onChange={(e) =>
-              setIsValues({
-                ...isValues,
+              setIsValues((prev) => ({
+                ...prev,
                 brandCd: e.target.value,
                 settlementCd: "",
-              })
+              }))
             }
             label="브랜드 (필수)"
             placeholder="브랜드를 선택하세요"
@@ -147,7 +142,7 @@ export default function Comp1() {
                 useMoment(isValues.openYmd).format("yyyy-mm-dd")
               }
               onClick={() =>
-                setCalenderOpen({ ...calenderOpen, openYmd: true })
+                setCalenderOpen((prev) => ({ ...prev, openYmd: true }))
               }
             />
           </Input>
@@ -160,7 +155,7 @@ export default function Comp1() {
                 useMoment(isValues.orgContractYmd).format("yyyy-mm-dd")
               }
               onClick={() =>
-                setCalenderOpen({ ...calenderOpen, orgContractYmd: true })
+                setCalenderOpen((prev) => ({ ...prev, orgContractYmd: true }))
               }
             />
           </Input>
@@ -177,7 +172,10 @@ export default function Comp1() {
                 useMoment(isValues.writtenContractYmd).format("yyyy-mm-dd")
               }
               onClick={() =>
-                setCalenderOpen({ ...calenderOpen, writtenContractYmd: true })
+                setCalenderOpen((prev) => ({
+                  ...prev,
+                  writtenContractYmd: true,
+                }))
               }
             />
           </Input>
@@ -190,10 +188,13 @@ export default function Comp1() {
                 useMoment(isValues.finalContractYmd).format("yyyy-mm-dd")
               }
               onClick={() => {
-                if (isValues.orgContractYmd === "")
+                if (!isValues.orgContractYmd)
                   alert("최초 계약일을 먼저 선택하세요");
                 else
-                  setCalenderOpen({ ...calenderOpen, finalContractYmd: true });
+                  setCalenderOpen((prev) => ({
+                    ...prev,
+                    finalContractYmd: true,
+                  }));
               }}
             />
           </Input>
@@ -331,37 +332,39 @@ export default function Comp1() {
             onChange={handleOnChange}
           />
         </Input>
+
         <Spacing size={20} />
         <V.Row align="center" gap={10}>
           <Checkbox
             label={{ title: "기부금 대상 여부" }}
-            checked={(isValues.donationYn ?? "N") === "Y"} //  null이면 "N" 처리
+            checked={(isValues.donationYn ?? "N") === "Y"}
             onChange={() =>
-              setIsValues({
-                ...isValues,
-                donationYn: (isValues.donationYn ?? "N") === "Y" ? "N" : "Y",
-              })
+              setIsValues((prev) => ({
+                ...prev,
+                donationYn: (prev.donationYn ?? "N") === "Y" ? "N" : "Y",
+              }))
             }
           />
         </V.Row>
       </Box>
 
-      {/* // 오픈일 > 달력 모달 */}
+      {/* 달력 모달들 */}
       <CalenderModal
         open={calenderOpen.openYmd}
-        onCancel={() => setCalenderOpen({ ...calenderOpen, openYmd: false })}
+        onCancel={() =>
+          setCalenderOpen((prev) => ({ ...prev, openYmd: false }))
+        }
         date={isValues.openYmd ? new Date(isValues.openYmd) : ("" as any)}
         onClick={(date) => {
-          setIsValues({ ...isValues, openYmd: date });
-          setCalenderOpen({ ...calenderOpen, openYmd: false });
+          setIsValues((prev) => ({ ...prev, openYmd: date }));
+          setCalenderOpen((prev) => ({ ...prev, openYmd: false }));
         }}
       />
 
-      {/* // 최초 계약일 > 달력 모달 */}
       <CalenderModal
         open={calenderOpen.orgContractYmd}
         onCancel={() =>
-          setCalenderOpen({ ...calenderOpen, orgContractYmd: false })
+          setCalenderOpen((prev) => ({ ...prev, orgContractYmd: false }))
         }
         date={
           isValues.orgContractYmd
@@ -369,16 +372,15 @@ export default function Comp1() {
             : ("" as any)
         }
         onClick={(date) => {
-          setIsValues({ ...isValues, orgContractYmd: date });
-          setCalenderOpen({ ...calenderOpen, orgContractYmd: false });
+          setIsValues((prev) => ({ ...prev, orgContractYmd: date }));
+          setCalenderOpen((prev) => ({ ...prev, orgContractYmd: false }));
         }}
       />
 
-      {/* // 서면 계약일 > 달력 모달 */}
       <CalenderModal
         open={calenderOpen.writtenContractYmd}
         onCancel={() =>
-          setCalenderOpen({ ...calenderOpen, writtenContractYmd: false })
+          setCalenderOpen((prev) => ({ ...prev, writtenContractYmd: false }))
         }
         date={
           isValues.writtenContractYmd
@@ -386,16 +388,18 @@ export default function Comp1() {
             : ("" as any)
         }
         onClick={(date) => {
-          setIsValues({ ...isValues, writtenContractYmd: date });
-          setCalenderOpen({ ...calenderOpen, writtenContractYmd: false });
+          setIsValues((prev) => ({ ...prev, writtenContractYmd: date }));
+          setCalenderOpen((prev) => ({
+            ...prev,
+            writtenContractYmd: false,
+          }));
         }}
       />
 
-      {/* // 최종 계약일 > 달력 모달 */}
       <CalenderModal
         open={calenderOpen.finalContractYmd}
         onCancel={() =>
-          setCalenderOpen({ ...calenderOpen, finalContractYmd: false })
+          setCalenderOpen((prev) => ({ ...prev, finalContractYmd: false }))
         }
         date={
           isValues.finalContractYmd
@@ -404,8 +408,8 @@ export default function Comp1() {
         }
         minDate={new Date(isValues.orgContractYmd) as any}
         onClick={(date) => {
-          setIsValues({ ...isValues, finalContractYmd: date });
-          setCalenderOpen({ ...calenderOpen, finalContractYmd: false });
+          setIsValues((prev) => ({ ...prev, finalContractYmd: date }));
+          setCalenderOpen((prev) => ({ ...prev, finalContractYmd: false }));
         }}
       />
     </>
