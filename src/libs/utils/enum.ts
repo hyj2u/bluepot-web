@@ -5,6 +5,10 @@ export const STATUS = {
 } as const;
 
 export const TOKEN = {
-  ACCESS: "blueport-admin-accessToken",
-  REFRESH: "blueport-admin-refreshToken",
+  ACCESS: "accessToken",
+  REFRESH: "refreshToken",
 } as const;
+
+export const getTokenCookieOptions = () => ({
+  domain: process.env.NEXT_PUBLIC_ENV === "production" ? ".cncocompany.com" : ".localhost",
+});

@@ -16,7 +16,7 @@ import { appUserStatusAtom } from "@/libs/atoms/auth-atom";
 import { useTanstackQuery } from "@/libs/hooks/useTanstackQuery";
 import { createSignIn } from "@/_https/auth";
 import { useCookie } from "../../libs/hooks/useCookie";
-import { TOKEN } from "@/libs/utils/enum";
+import { TOKEN, getTokenCookieOptions } from "@/libs/utils/enum";
 
 //
 export default function Login() {
@@ -31,8 +31,8 @@ export default function Login() {
     mutationFn: () => createSignIn({ userId: isValue.id, userPw: isValue.pw }),
     onSuccess: (data) => {
       setAppStatus({ ...appStatus, status: "success" });
-      useCookie.set(TOKEN.ACCESS, data?.accessToken);
-      useCookie.set(TOKEN.REFRESH, data?.refreshToken);
+      useCookie.set(TOKEN.ACCESS, data?.accessToken, getTokenCookieOptions());
+      useCookie.set(TOKEN.REFRESH, data?.refreshToken, getTokenCookieOptions());
       router.push("/");
     },
     onError: (err: any) => {
@@ -52,7 +52,7 @@ export default function Login() {
 useEffect(() => {
   if (appStatus.status === "success" || !!accessToken)
     router.push("/");
-}, [appStatus.status]);
+}, [appStatus.status, accessToken]);
 
 
 
