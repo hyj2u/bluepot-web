@@ -9,6 +9,12 @@ export const TOKEN = {
   REFRESH: "refreshToken",
 } as const;
 
-export const getTokenCookieOptions = () => ({
-  domain: process.env.NEXT_PUBLIC_ENV === "production" ? ".cncocompany.com" : ".localhost",
-});
+export const getTokenCookieOptions = () => {
+  if (process.env.NODE_ENV === "production") {
+    return {
+      domain: ".cncocompany.com",
+    };
+  }
+  // 개발 환경에서는 도메인을 설정하지 않음 (localhost에서 사용)
+  return {};
+};

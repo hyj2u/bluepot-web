@@ -14,7 +14,7 @@ import {
 import { regEx } from "@/libs/utils/regEx";
 
 //hooks
-import { STATUS, TOKEN } from "@/libs/utils/enum";
+import { STATUS, TOKEN, getTokenCookieOptions } from "@/libs/utils/enum";
 import { useCookie } from "@/libs/hooks/useCookie";
 import { useTanstackQuery } from "@/libs/hooks/useTanstackQuery";
 
@@ -50,8 +50,8 @@ export default function Index() {
   //
   // 로그아웃
   const onLogout = () => {
-    useCookie.remove(TOKEN.ACCESS);
-    useCookie.remove(TOKEN.REFRESH);
+    useCookie.remove(TOKEN.ACCESS, getTokenCookieOptions());
+    useCookie.remove(TOKEN.REFRESH, getTokenCookieOptions());
     setAppStatus(initialAppUserStatus);
     queryClient.clear();
     router.push("/login");

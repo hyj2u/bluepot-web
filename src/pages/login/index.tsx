@@ -31,8 +31,12 @@ export default function Login() {
     mutationFn: () => createSignIn({ userId: isValue.id, userPw: isValue.pw }),
     onSuccess: (data) => {
       setAppStatus({ ...appStatus, status: "success" });
+      console.log("Saving tokens:", data?.accessToken, data?.refreshToken);
+      console.log("NEXT_PUBLIC_ENV:", process.env.NEXT_PUBLIC_ENV);
+      console.log("Cookie options:", getTokenCookieOptions());
       useCookie.set(TOKEN.ACCESS, data?.accessToken, getTokenCookieOptions());
       useCookie.set(TOKEN.REFRESH, data?.refreshToken, getTokenCookieOptions());
+      console.log("Token after save:", useCookie.get(TOKEN.ACCESS));
       router.push("/");
     },
     onError: (err: any) => {

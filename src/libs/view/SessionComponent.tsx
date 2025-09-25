@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { NextRouter, useRouter } from "next/router";
 import { useTanstackQuery } from "../hooks/useTanstackQuery";
 import { useCookie } from "../hooks/useCookie";
-import { STATUS, TOKEN } from "../utils/enum";
+import { STATUS, TOKEN, getTokenCookieOptions } from "../utils/enum";
 import { getUserVerify } from "@/_https/auth";
 
 //atoms
@@ -44,8 +44,8 @@ export default function SessionComponent({
     },
     onError: () => {
       router.replace("/login");
-      useCookie.remove(TOKEN.ACCESS);
-      useCookie.remove(TOKEN.REFRESH);
+      useCookie.remove(TOKEN.ACCESS, getTokenCookieOptions());
+      useCookie.remove(TOKEN.REFRESH, getTokenCookieOptions());
       queryClient.clear;
       setAppStatus({
         rule: null,
