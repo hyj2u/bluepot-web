@@ -9,7 +9,7 @@ import { appUserStatusAtom } from "@/libs/atoms/auth-atom";
 import { useTanstackQuery } from "@/libs/hooks/useTanstackQuery";
 import { createSignIn } from "@/_https/auth";
 import { useCookie } from "../../libs/hooks/useCookie";
-import { TOKEN } from "@/libs/utils/enum";
+import { TOKEN, getTokenCookieOptions } from "@/libs/utils/enum";
 import PasswordChangeModal from "@/libs/components/login/PasswordChangeModal";
 
 const Login: React.FC = () => {
@@ -25,8 +25,8 @@ const Login: React.FC = () => {
   const { mutate: onLogin } = useMutation({
     mutationFn: () => createSignIn({ userId: isValue.id, userPw: isValue.pw }),
     onSuccess: (data) => {
-      useCookie.set(TOKEN.ACCESS, data?.accessToken);
-      useCookie.set(TOKEN.REFRESH, data?.refreshToken);
+      useCookie.set(TOKEN.ACCESS, data?.accessToken, getTokenCookieOptions());
+      useCookie.set(TOKEN.REFRESH, data?.refreshToken, getTokenCookieOptions());
 
       // 비밀번호 변경이 필요하면 모달을 열고 리다이렉트하지 않음
       if (data?.requiresPasswordChange) {

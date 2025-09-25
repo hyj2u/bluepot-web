@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { STATUS, TOKEN } from "@/libs/utils/enum";
+import { STATUS, TOKEN, getTokenCookieOptions } from "@/libs/utils/enum";
 import { useCookie } from "@/libs/hooks/useCookie";
 import { API } from "./apis";
 import {
@@ -29,8 +29,8 @@ export function useAxios() {
       (response) => response,
       async (error) => {
         if (error?.response?.status === 401) {
-          useCookie.remove(TOKEN.ACCESS);
-          useCookie.remove(TOKEN.REFRESH);
+          useCookie.remove(TOKEN.ACCESS, getTokenCookieOptions());
+          useCookie.remove(TOKEN.REFRESH, getTokenCookieOptions());
           setAppStatus(initialAppUserStatus);
           router.push("/login");
 
