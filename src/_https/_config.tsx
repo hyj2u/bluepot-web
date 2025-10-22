@@ -15,6 +15,7 @@ export function useAxios() {
   const router = useRouter();
 
   useEffect(() => {
+    const accessToken = useCookie.get(TOKEN.ACCESS); 
     const requestIntercept = API.interceptors.request.use(
       (config) => {
         if (accessToken && !config.headers["Authorization"]) {
